@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qachecklist_login/api/api_auth_services.dart';
+import 'package:qachecklist_login/api/auth_services.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
 import 'package:qachecklist_login/views/login_screen.dart';
 
@@ -11,7 +11,7 @@ class AuthCheck extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget? activeScreen;
-    ApiAuthService sqlAuthService = ApiAuthService();
+    AuthService sqlAuthService = AuthService();
 
     if (sqlAuthService.isLogin()) {
       activeScreen = const HomeScreen();
