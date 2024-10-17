@@ -54,12 +54,11 @@ class ApiService {
   ///
   Future<LoginResponse> login(LoginRequest request) async {
     LoginResponse loginResponse= LoginResponse(
-            jwtData:JwtData(accessToken: "", refreshToken: ""), 
+            loginResult:null,
             ok: false, 
-            loginDate:DateTime.now().toString(),
             message: 'undefined message');
 
-    String loginUrl = ApiConstants.loginRequestUrl;
+    String loginUrl = ApiConstants.mobLoginRequestUrl;
     try {
       await generalRequest(loginUrl, request).then((boDataProcessResult) {
         
@@ -69,9 +68,10 @@ class ApiService {
         if (boDataProcessResult.ok) {         
           Map<String,dynamic> jcontent= boDataProcessResult.content as Map<String,dynamic> ;      
           LoginResult loginResult=LoginResult.fromJson(jcontent) ;
-          Map<String,dynamic> jwtDataJson= loginResult.jwtData as Map<String,dynamic> ;      
-          JwtData jwtData=JwtData.fromJson(jwtDataJson);
-          loginResponse.jwtData=jwtData;          
+          //Map<String,dynamic> json_objectRights=loginResult.objectRights as Map<String,dynamic> ;      
+          //List<ObjectRight> objectRights=ObjectRights.fromJson(json_objectRights);
+
+          loginResponse.loginResult=loginResult;          
         } 
        
       });      

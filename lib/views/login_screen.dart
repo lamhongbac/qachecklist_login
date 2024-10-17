@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qachecklist_login/api/api_auth_services.dart';
+import 'package:qachecklist_login/api/auth_services.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
 import 'package:qachecklist_login/widgets/helpers.dart';
 
@@ -52,27 +52,35 @@ class _LoginScreenState extends State<LoginScreen> {
     _login();
   }
 
-  void _login() async {
+ void _login() async {
     String message = 'Login Successfully';
     //_isLogin = true;
-    ApiAuthService apiAuthService = ApiAuthService();
+    AuthService apiAuthService = AuthService();
 
     await apiAuthService
         .login(enteredUserID, enteredPassword)
         .then((loginResponse) {
+
       if (!loginResponse.ok) {
         message = 'Login failure, error: ${loginResponse.message}';
       } else {
+
         if (mounted) {
           Navigator.pushReplacement(context,
               MaterialPageRoute(builder: (context) => const HomeScreen()));
         }
       }
+      //return message;
     });
+    
+    //
     if (mounted) {
       showInfoMessage(message, context);
     }
+  
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +96,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset('assets/images/Logo2024.png',
+                  Image.asset('assets/images/Logo.png',
                       height: 130, width: 150, fit: BoxFit.contain),
                   addVerticalSpace(36),
                   TextFormField(

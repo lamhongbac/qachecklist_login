@@ -39,13 +39,11 @@ class LoginRequest extends BaseApiRequest {
 ///
 ///
 class LoginResponse extends BaseApiResponse {
-  JwtData jwtData;  
-  String loginDate;
+  LoginResult? loginResult;  
+  
 
   //default constructor
-  LoginResponse({ 
-      required this.jwtData,
-      required this.loginDate,            
+  LoginResponse({ required this.loginResult,              
       required super.ok, required super.message});
 
   ///
@@ -53,8 +51,7 @@ class LoginResponse extends BaseApiResponse {
   ///
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-        loginDate: json["loginDate"] ?? "",
-        jwtData: json["jwtData"] ,        
+        loginResult: json["loginResult"] ?? "",          
         ok: json["ok"] ?? false,
         message: json["message"] ?? "");
   }
@@ -62,8 +59,8 @@ class LoginResponse extends BaseApiResponse {
   //jwtData = jsonDecode(json["jwtData"])
   @override
   fromJson(Map<String, dynamic> json) {
-    loginDate = json["loginDate"] ?? "";
-    jwtData = json["jwtData"] ;    
+    loginResult = json["loginResult"] ?? "";
+       
     ok = json["ok"] ?? false;
     message = json["message"] ?? "";
   }
@@ -88,71 +85,80 @@ class JwtData
 ///
 ///
 class LoginResult {
-
-  dynamic jwtData;  
-  String loginDate=DateTime.now().toString();
-
-  //default constructor
-  LoginResult({ 
-      required this.jwtData,
-      required this.loginDate,      
-      });
-      
-
-  ///
-  ///constructor from json giup chuyen hoa kq tu BE General Object ve business object
-  ///
-  factory LoginResult.fromJson(Map<String, dynamic> json) {             
-    return LoginResult(
-        loginDate: json["loginDate"] ?? "",
-        jwtData: json["jwtData"]                 
-    );
-  }
-}
-
-class MobLoginResult {
   int id;
   String userName;
   String fullName;
   String emailAddress;
   List<String> roles;
-  //List<ObjectRight> objectRights
   List<ObjectRight> objectRights;
+  String appID;
+  String companyID;
+  String managerID;
+  String managerEmail;
+  List<int> ?storeIDs;
+  String loginID =DateTime.now().toString();
+  //String loginDate: "2024-10-17T14:25:23.4890155+07:00"
   String loginDate=DateTime.now().toString();
 
   //default constructor
-  MobLoginResult({ required this.id,
-  required this.userName,
-  required this.fullName,
-  required this.emailAddress,
-  required this.roles,
-  //List<ObjectRight> objectRights
- required this.objectRights,
-  required this.loginDate
+  LoginResult({ 
+      required this.id,
+      required this.userName,
+      required this.fullName,
+      required this.emailAddress,
+      required this.roles,
+      required this.objectRights,    
+      required this.appID,
+      required this.companyID,
+      required this.loginDate,
+      required this.loginID,
+      required this.managerEmail,
+      required this.managerID,
+      required this.storeIDs        
       });
       
 
   ///
   ///constructor from json giup chuyen hoa kq tu BE General Object ve business object
   ///
-  factory MobLoginResult.fromJson(Map<String, dynamic> json) {
-
-    return MobLoginResult(
-        id: json["id"] ?? -1,
-        userName: json["userName"] ?? "",
-        fullName: json["fullName"] ?? "",
-        emailAddress: json["emailAddress"] ?? "",
-        roles: json["roles"] ?? [],        
-        objectRights: json["objectRights"] ?? [],
-        loginDate: json["loginDate"] ?? DateTime.now().toString()        
-    );
+  factory LoginResult.fromJson(Map<String, dynamic> json) {   
     
+    List<ObjectRight> objectRights=[];
+
+    json['objectRights'].forEach((v){
+      ObjectRight objectRight=  ObjectRight.fromJson(v as Map<String,dynamic>);
+      objectRights.add(objectRight);
+    });
+              
+    return LoginResult(
+       id:json["id"]??-1,
+       userName:json['userName']??"",
+       fullName:json['fullName']??"",
+       emailAddress:json['emailAddress']??"",
+       roles:json['roles']??[],
+       objectRights:objectRights,
+       //ObjectRights.fromJson(json['objectRights'] as Map<String,dynamic>),    
+       appID:json['appID']??-1,
+       companyID:json['companyID']??-1,
+       loginDate:json['loginDate']??"",
+       loginID:json['loginID']??"",
+       managerEmail:json['managerEmail']??"",
+       managerID:json['managerID']??-1,
+       storeIDs:json['storeIDs']??[]
+                         
+    );
   }
 }
 class ObjectRights
 {
   ObjectRights({required this.rights});
   List<ObjectRight> rights=[];
+  //fromJson()
+factory ObjectRights.fromJson(Map<String, dynamic> json) {
+    return ObjectRights(
+        rights: json["rights"] ?? []          
+    );
+  }
 }  
   
 // mô tả tập right trên 1 object
@@ -162,4 +168,14 @@ class ObjectRight
 
   String objectName;
   List<String> rights;
+  
+  factory  ObjectRight.fromJson(Map<String, dynamic> json) {
+    Map<String,dynamic> _rights=json['rights'] as Map<String,dynamic>;
+    
+    //decode
+    var obj_rights=_rights['rights'];
+
+    return ObjectRight(objectName: json['objectName'],
+    rights:obj_rights);
+  }
 }
