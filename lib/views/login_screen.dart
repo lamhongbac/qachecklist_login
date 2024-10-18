@@ -101,9 +101,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset('assets/images/Logo.png',
-                  Image.asset('assets/images/Logo.png',
-                      height: 130, width: 150, fit: BoxFit.contain),
+                  Image.asset('assets/images/Logo.png'),
+                  // Image.asset('assets/images/Logo.png',
+                  //     height: 130, width: 150, fit: BoxFit.contain),
                   addVerticalSpace(36),
                   TextFormField(
                     controller: emailController,
