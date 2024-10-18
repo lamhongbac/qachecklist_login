@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:qachecklist_login/api/api_auth_services.dart';
+import 'package:qachecklist_login/api/auth_services.dart';
+//import 'package:qachecklist_login/api/models/account_models.dart';
+import 'package:qachecklist_login/api/models/general_models.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
 import 'package:qachecklist_login/widgets/helpers.dart';
 
@@ -36,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return isValid;
   }
 
-  void _submit() async {
+  void _submit(BuildContext context) async {
     //kiem tra xem co thoa man validator
     final isValid = _formkey.currentState!.validate();
 
@@ -49,30 +51,41 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
     //thuc hien ham login
-    _login();
+    _login(context);
   }
 
-  void _login() async {
-    String message = 'Login Successfully';
+  void _login(BuildContext context) async {
+    //String message = 'Login Successfully';
     //_isLogin = true;
-    ApiAuthService apiAuthService = ApiAuthService();
+    AuthService apiAuthService = AuthService();
 
-    await apiAuthService
-        .login(enteredUserID, enteredPassword)
-        .then((loginResponse) {
-      if (!loginResponse.ok) {
-        message = 'Login failure, error: ${loginResponse.message}';
-      } else {
+    try {
+      ApiRequestResult? loginResponse;
+
+      await apiAuthService
+          .login(enteredUserID, enteredPassword)
+          .then((response) {
+        loginResponse = response;
+
         if (mounted) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()));
+          showInfoMessage(loginResponse!.message, context);
         }
+
+        //return message;
+      });
+      if (mounted) {
+        //showInfoMessage(response.message);
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
       }
-    });
-    if (mounted) {
-      showInfoMessage(message, context);
+    } catch (e) {
+      if(mounted)
+      {showInfoMessage(e.toString(), context);}
     }
+    //
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -88,8 +101,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Image.asset('assets/images/Logo2024.png',
-                      height: 130, width: 150, fit: BoxFit.contain),
+                  Image.asset('assets/images/Logo.png'),
+                  // Image.asset('assets/images/Logo.png',
+                  //     height: 130, width: 150, fit: BoxFit.contain),
                   addVerticalSpace(36),
                   TextFormField(
                     controller: emailController,
@@ -130,9 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   addVerticalSpace(16),
                   OutlinedButton(
-                      onPressed: _submit, child: const Text('Sign In')),
-                 
-                 
+                      onPressed: (){_submit(context);}, child: const Text('Sign In')),
                 ]),
           ),
         ),
