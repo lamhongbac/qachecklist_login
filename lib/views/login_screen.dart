@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qachecklist_login/api/auth_services.dart';
+//import 'package:qachecklist_login/api/models/account_models.dart';
+import 'package:qachecklist_login/api/models/general_models.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
 import 'package:qachecklist_login/widgets/helpers.dart';
 
@@ -36,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return isValid;
   }
 
-  void _submit() async {
+  void _submit(BuildContext context) async {
     //kiem tra xem co thoa man validator
     final isValid = _formkey.currentState!.validate();
 
@@ -49,38 +51,39 @@ class _LoginScreenState extends State<LoginScreen> {
       return;
     }
     //thuc hien ham login
-    _login();
+    _login(context);
   }
 
- void _login() async {
-    String message = 'Login Successfully';
+  void _login(BuildContext context) async {
+    //String message = 'Login Successfully';
     //_isLogin = true;
     AuthService apiAuthService = AuthService();
 
-    await apiAuthService
-        .login(enteredUserID, enteredPassword)
-        .then((loginResponse) {
+    try {
+      ApiRequestResult? loginResponse;
 
-      if (!loginResponse.ok) {
-        message = 'Login failure, error: ${loginResponse.message}';
-      } else {
+      await apiAuthService
+          .login(enteredUserID, enteredPassword)
+          .then((response) {
+        loginResponse = response;
 
         if (mounted) {
-          Navigator.pushReplacement(context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()));
+          showInfoMessage(loginResponse!.message, context);
         }
+
+        //return message;
+      });
+      if (mounted) {
+        //showInfoMessage(response.message);
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const HomeScreen()));
       }
-      //return message;
-    });
-    
-    //
-    if (mounted) {
-      showInfoMessage(message, context);
+    } catch (e) {
+      if(mounted)
+      {showInfoMessage(e.toString(), context);}
     }
-  
+    //
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -138,9 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   addVerticalSpace(16),
                   OutlinedButton(
-                      onPressed: _submit, child: const Text('Sign In')),
-                 
-                 
+                      onPressed: (){_submit(context);}, child: const Text('Sign In')),
                 ]),
           ),
         ),

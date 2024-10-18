@@ -52,18 +52,22 @@ class ApiService {
   ///LoginResponse: ket qua của login
   ///co the  la thanh cong hay that bai
   ///
-  Future<LoginResponse> login(LoginRequest request) async {
-    LoginResponse loginResponse= LoginResponse(
-            loginResult:null,
-            ok: false, 
-            message: 'undefined message');
+  Future<ApiRequestResult> login(LoginRequest request) async {
+
+     ApiRequestResult loginResponse=    ApiRequestResult(
+         content:null,
+         ok: false,
+         numOfRow: -1,         
+         message: "error:  not reach api server");
 
     String loginUrl = ApiConstants.mobLoginRequestUrl;
     try {
       await generalRequest(loginUrl, request).then((boDataProcessResult) {
         
-        loginResponse.message=boDataProcessResult.message;
-        loginResponse.ok=boDataProcessResult.ok;
+        //loginResponse.message=boDataProcessResult.message;
+        //loginResponse.ok=boDataProcessResult.ok;
+        
+        loginResponse=boDataProcessResult;
 
         if (boDataProcessResult.ok) {         
           Map<String,dynamic> jcontent= boDataProcessResult.content as Map<String,dynamic> ;      
@@ -71,7 +75,7 @@ class ApiService {
           //Map<String,dynamic> json_objectRights=loginResult.objectRights as Map<String,dynamic> ;      
           //List<ObjectRight> objectRights=ObjectRights.fromJson(json_objectRights);
 
-          loginResponse.loginResult=loginResult;          
+          loginResponse.content=loginResult;          
         } 
        
       });      
@@ -80,9 +84,8 @@ class ApiService {
     {
       throw Exception(e);
     }
-    
-    // return LoginResponse(
-    //     jwtData:JwtData(accessToken: "", refreshToken: ""),
+    // rthroeturthron LoginResponse(
+    //     jthrowtData:JwtData(accessToken: "", refreshToken: ""),
     //     ok: false, 
     //     loginDate:DateTime.now().toString(),
     //     message: 'general error message');
