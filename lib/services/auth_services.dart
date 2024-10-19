@@ -3,15 +3,23 @@
 import 'package:qachecklist_login/api/api_services.dart';
 import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/api/models/general_models.dart';
+import 'package:qachecklist_login/models/userinfo.dart';
 import 'package:qachecklist_login/utils/secure_data.dart';
 
 class AuthService {
   
   static bool haveLogin=false;
-  static LoginResult? userInfo;
+  static UserInfo? userInfo;
 
   SecureData secureData=SecureData();
-
+  static bool IsQAOfficer()
+  {
+    return true;
+  }
+  static bool IsRestaurantManager()
+  {
+    return false;
+  }
   logout()
   {
     secureData.deleteData("isLogin");
@@ -23,9 +31,25 @@ class AuthService {
   //
   Future<bool> isLogin() async {
     String isLogin= await secureData.readData("isLogin");
+    if(isLogin=="true")
+    {
+      AuthService.haveLogin=true;
+      AuthService.userInfo=await getLocalUserInfo();
+    }
     return isLogin=="true";
   }
+  Future<UserInfo> getLocalUserInfo() async
+  {
+    Map<String,dynamic> userInfoJson=await secureData.readJson("userInfo");
+    return UserInfo.fromJson(userInfoJson);
+  }
+   saveLocalUserInfo(LoginResult loginResult)
+  {
+    Map<String,dynamic> userInfoJson={
 
+    };
+    secureData.saveJson("userInfo", userInfoJson);
+  }
   //
   //
   //

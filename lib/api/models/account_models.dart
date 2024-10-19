@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:qachecklist_login/api/models/general_models.dart';
+import 'package:qachecklist_login/models/userinfo.dart';
 
 ///
 ///Class chua thong tin login request
@@ -168,24 +169,5 @@ class ObjectRights {
   //fromJson()
   factory ObjectRights.fromJson(Map<String, dynamic> json) {
     return ObjectRights(rights: json["rights"] ?? []);
-  }
-}
-
-// mô tả tập right trên 1 object
-class ObjectRight {
-  ObjectRight({required this.objectName, required this.rights});
-
-  String objectName;
-  List<String> rights;
-
-  factory ObjectRight.fromJson(Map<String, dynamic> json) {
-    if (json['rights'] == '') {
-      throw Exception('object right is null');
-    }
-    List<String> rightlist =
-        (json['rights'] as List).map((item) => item as String).toList();
-    //List<String> categoriesList = List<String>.from(map['categories'] as List);
-
-    return ObjectRight(objectName: json['objectName'], rights: rightlist);
   }
 }

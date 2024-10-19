@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qachecklist_login/api/auth_services.dart';
+import 'package:qachecklist_login/services/auth_services.dart';
 //import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/api/models/general_models.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
@@ -16,6 +16,8 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  
+  
 
   //bool _isLogin = false;
   String enteredUserID = '';
@@ -89,6 +91,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    
+    emailController.text='NghinhthuQAO';
+    passwordController.text='123456';
+
     return Scaffold(
       body: Center(
         child: Form(

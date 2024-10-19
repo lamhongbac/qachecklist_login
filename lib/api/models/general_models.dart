@@ -1,5 +1,5 @@
 
-import 'package:qachecklist_login/api/constants.dart';
+import 'package:qachecklist_login/services/constants.dart';
 
 
 abstract class BaseApiResponse {

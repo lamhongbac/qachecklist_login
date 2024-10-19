@@ -2,7 +2,7 @@ import 'package:http/http.dart' as http;
 
 import 'dart:convert';
 
-import 'package:qachecklist_login/api/constants.dart';
+import 'package:qachecklist_login/services/constants.dart';
 import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/api/models/general_models.dart';
 

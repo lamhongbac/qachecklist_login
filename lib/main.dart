@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qachecklist_login/api/auth_services.dart';
+import 'package:qachecklist_login/services/auth_services.dart';
 //import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/views/auth_check.dart';
 import 'package:qachecklist_login/views/home_screen.dart';

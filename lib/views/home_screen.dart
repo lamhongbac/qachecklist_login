@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qachecklist_login/api/auth_services.dart';
+import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/views/login_screen.dart';
 
 class HomeScreen extends StatelessWidget {
