@@ -79,6 +79,8 @@
 //   }
 // }
 
+import 'dart:convert';
+
 class ObjectRight {
   ObjectRight({required this.objectName, required this.rights});
 
@@ -94,5 +96,13 @@ class ObjectRight {
     //List<String> categoriesList = List<String>.from(map['categories'] as List);
 
     return ObjectRight(objectName: json['objectName'], rights: rightlist);
+  }
+  
+  Map<String, dynamic>  toJson()
+  {
+    return {
+        'objectName':objectName,
+        'rights':jsonEncode(rights)
+    };
   }
 }

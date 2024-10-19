@@ -1,3 +1,5 @@
+//kieu du lieu do nguoi dung dinh nghia
+
 enum userRolesEnum
 {
   qaofficer,

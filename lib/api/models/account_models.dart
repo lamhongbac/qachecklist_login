@@ -151,13 +151,14 @@ class LoginResult {
   }
 
   Map<String, dynamic> toJson() {
+    var objectRightJson = jsonEncode(objectRights.map((e) => e.toJson()).toList());
     return {
       'id': id,
       'userName': userName,
       'fullName': fullName,
       'emailAddress': emailAddress,
       'roles': jsonEncode(roles) ,
-      'objectRights':jsonEncode(objectRights) ,
+      'objectRights':objectRightJson,
       'appID': appID,
       'companyID': companyID,
       'loginDate': loginDate,

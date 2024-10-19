@@ -12,7 +12,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   AuthService authService=AuthService();
-  await authService.logout();
+  //await authService.logout();
   await authService.getLocalUserInfo();
 
   

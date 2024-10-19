@@ -5,17 +5,17 @@ import 'package:qachecklist_login/views/login_screen.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  
+  signOut(BuildContext context) async
+    {
+      AuthService authService=AuthService();
+      await authService.logout();
+      Navigator.pushReplacement(context, 
+      MaterialPageRoute(builder:(contex) =>const LoginScreen()));
+    }
   @override
   Widget build(BuildContext context) {
 
-  signOut() async
-  {
-    AuthService authService=AuthService();
-    await authService.logout();
-    Navigator.pushReplacement(context, 
-    MaterialPageRoute(builder:(contex) =>const LoginScreen()));
-  }
+    
     return  Scaffold(
       appBar: AppBar(
         title: const Text('Home Screen'),
@@ -24,12 +24,12 @@ class HomeScreen extends StatelessWidget {
             tooltip: 'logout of App',
             onPressed: () {
               // handle the press
-              signOut();
+              signOut(context);
             },)
         ],),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          signOut();
+          signOut(context);
         },
         child: Icon(Icons.logout_rounded),
         backgroundColor: Colors.green,

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 //import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/api/models/general_models.dart';
-import 'package:qachecklist_login/views/auth_check.dart';
+//import 'package:qachecklist_login/views/auth_check.dart';
+import 'package:qachecklist_login/views/home_screen.dart';
 //import 'package:qachecklist_login/views/home_screen.dart';
 import 'package:qachecklist_login/widgets/helpers.dart';
+import 'package:qachecklist_login/widgets/qa_home.dart';
+import 'package:qachecklist_login/widgets/rest_home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -17,11 +20,11 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-   
+
   //bool _isLogin = false;
   String enteredUserID = '';
   String enteredPassword = '';
-  
+
   ///
   /// rule : password not null, and length >=6
   bool isValidPassword(String? password) {
@@ -46,9 +49,8 @@ class _LoginScreenState extends State<LoginScreen> {
   ///
   ///kiem tra userid/password is valid
   /// if isvalid goto login function
-  /// 
+  ///
   void _submit(BuildContext context) async {
-
     //1.kiem tra xem co thoa man validator
     final isValid = _formkey.currentState!.validate();
 
@@ -76,43 +78,39 @@ class _LoginScreenState extends State<LoginScreen> {
     //String message = 'Login Successfully';
     //_isLogin = true;
     AuthService authService = AuthService();
-
-    try {
-      ApiRequestResult? loginResponse;
-
-      await authService
-          .login(enteredUserID, enteredPassword)
-          .then((response) {
+    ApiRequestResult? loginResponse;
+    try {      
+      await authService.login(enteredUserID, enteredPassword).then((response) {
         loginResponse = response;
 
         if (mounted) {
-          if (loginResponse!.ok==true)
-          {
+          if (loginResponse!.ok == true) {
             showInfoMessage(loginResponse!.message, context);
-            Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const AuthCheck()));
+            if (AuthService.isQaOfficer()) {
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const QAOfficerHome()));
+            } else {
+              if (AuthService.isRestaurantManager()) {
+                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const RestaurantHome()));
+              }
             }
-          else
-          {
+            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const HomeScreen()));
+          } else {
             showWarningMessage(loginResponse!.message, context);
           }
         }
       });
-      
     } catch (e) {
-      if(mounted)
-      {showInfoMessage(e.toString(), context);}
+      if (mounted) {
+        showInfoMessage(e.toString(), context);
+      }
     }
     //
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    
-    emailController.text='NghinhthuQAO';
-    passwordController.text='123456';
+    emailController.text = 'NghinhthuQAO';
+    passwordController.text = '123456';
 
     return Scaffold(
       body: Center(
@@ -169,7 +167,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   addVerticalSpace(16),
                   OutlinedButton(
-                      onPressed: (){_submit(context);}, child: const Text('Sign In')),
+                      onPressed: () {
+                        _submit(context);
+                      },
+                      child: const Text('Sign In')),
                 ]),
           ),
         ),

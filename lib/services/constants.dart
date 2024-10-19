@@ -22,5 +22,5 @@ class AppConstants{
   static const userInfo='userInfo';
 
   static const appTitle="Login Function Demo";
-
+  static const isLogin="isLogin";
 }
