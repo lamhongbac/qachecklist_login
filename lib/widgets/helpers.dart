@@ -12,8 +12,13 @@ Widget addHorizontalSpace(double width) {
     width: width,
   );
 }
-
+//show info
 void showInfoMessage(String message, BuildContext context) {
+  ScaffoldMessenger.of(context).clearSnackBars();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+}
+//show warning: can viet lai ham nay
+void showWarningMessage(String message, BuildContext context) {
   ScaffoldMessenger.of(context).clearSnackBars();
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
 }

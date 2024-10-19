@@ -3,57 +3,77 @@
 import 'package:qachecklist_login/api/api_services.dart';
 import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/api/models/general_models.dart';
-import 'package:qachecklist_login/models/userinfo.dart';
+import 'package:qachecklist_login/services/constants.dart';
+import 'package:qachecklist_login/services/general.dart';
+//import 'package:qachecklist_login/models/userinfo.dart';
 import 'package:qachecklist_login/utils/secure_data.dart';
 
 class AuthService {
   
   static bool haveLogin=false;
-  static UserInfo? userInfo;
+  static LoginResult? userInfo;
 
   SecureData secureData=SecureData();
-  static bool IsQAOfficer()
+  //kiem tra xem user hien tai co phai la QA officer role
+  static bool isQaOfficer()
   {
+
     return true;
   }
-  static bool IsRestaurantManager()
+  //kiem tra xem user co phai la restaurant manager role
+  static bool isRestaurantManager()
   {
     return false;
   }
-  logout()
+  ///
+  ///login = save
+  ///logout=delete
+  ///
+  logout() async
   {
-    secureData.deleteData("isLogin");
-    secureData.deleteData("loginInfo");
-    
-  }
-  //
-  //use api to check if email is logined?
-  //
-  Future<bool> isLogin() async {
-    String isLogin= await secureData.readData("isLogin");
-    if(isLogin=="true")
-    {
-      AuthService.haveLogin=true;
-      AuthService.userInfo=await getLocalUserInfo();
-    }
-    return isLogin=="true";
-  }
-  Future<UserInfo> getLocalUserInfo() async
-  {
-    Map<String,dynamic> userInfoJson=await secureData.readJson("userInfo");
-    return UserInfo.fromJson(userInfoJson);
-  }
-   saveLocalUserInfo(LoginResult loginResult)
-  {
-    Map<String,dynamic> userInfoJson={
+   if (await secureData.readData( AppConstants.userInfo)!=null)
+   {
+    await secureData.deleteData(AppConstants.userInfo);
+   }
 
-    };
-    secureData.saveJson("userInfo", userInfoJson);
+  }
+
+  ///
+  // use api to check if email is logined?
+  /// check if user is login or not
+  ///
+  Future<bool> isLogin() async {
+    AuthService.userInfo=await getLocalUserInfo();    
+    return AuthService.userInfo!=null;
+  }
+  ///
+  ///get user info
+  ///
+  Future<LoginResult?> getLocalUserInfo() async
+  {
+    Map<String,dynamic>? userInfoJson=await secureData.readJson(AppConstants.userInfo);
+    if (userInfoJson!=null)
+    {    
+      return LoginResult.fromJson(userInfoJson);}
+    else
+    {
+      return null;
+    }
+  }
+  ///
+  ///save login result to local
+  ///
+  saveLocalUserInfo(LoginResult loginResult) async
+  {              
+      //save userInfo
+    await  secureData.saveJson(AppConstants.userInfo, loginResult.toJson());
   }
   //
-  //
+  // kiem tra BE login, if OK save to local 
+  // also save to AuthService.userInfo
   //
   Future<ApiRequestResult> login(String userName, String password) async {
+
     ApiRequestResult loginResponse=    ApiRequestResult(
          content:null,
          ok: false,
@@ -62,7 +82,7 @@ class AuthService {
 
     LoginRequest loginRequest = LoginRequest(
         keepLogined: false,
-        userType: 'UserID',
+        userType: appUserType.UserID.toString(),
         userName: userName,
         password: password);
 
@@ -73,12 +93,10 @@ class AuthService {
         loginResponse= result;
         if(loginResponse.ok)
         {
-          Map<String,dynamic> loginData=
-          (loginResponse.content as LoginResult).toJson() ;
-          
-          secureData.writeData("isLogin", "true");
-          secureData.saveJson("loginInfo", loginData);
-       
+          //save local
+           saveLocalUserInfo(loginResponse.content);
+           //save to service for loop check
+          AuthService.userInfo=loginResponse.content;
         }
       });
     } on Exception catch (e) {

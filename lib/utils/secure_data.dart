@@ -8,8 +8,8 @@ class SecureData {
     await secureStorage.write(key: key, value: value);
   }
 
-  Future<String> readData(String key) async {
-    String value = await secureStorage.read(key: key) ?? 'NoData';
+  Future<String?> readData(String key) async {
+    String? value = await secureStorage.read(key: key);
     return value;
   }
 
@@ -24,8 +24,11 @@ class SecureData {
   }
 
   //
-   Future<Map<String, dynamic>> readJson(String key) async {
-    String sdata = await secureStorage.read(key: key) ?? "{data:'nodata'}";
-    return json.decode(sdata) as Map<String, dynamic>;
+   Future<Map<String, dynamic>?> readJson(String key) async {
+    String? sdata = await secureStorage.read(key: key) ;
+    if (sdata!=null)
+    {return json.decode(sdata) as Map<String, dynamic>;}
+    else
+    {return null;}
   }
 }

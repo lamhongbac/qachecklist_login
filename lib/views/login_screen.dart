@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 //import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/api/models/general_models.dart';
-import 'package:qachecklist_login/views/home_screen.dart';
+import 'package:qachecklist_login/views/auth_check.dart';
+//import 'package:qachecklist_login/views/home_screen.dart';
 import 'package:qachecklist_login/widgets/helpers.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,13 +17,13 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formkey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  
-  
-
+   
   //bool _isLogin = false;
   String enteredUserID = '';
   String enteredPassword = '';
-
+  
+  ///
+  /// rule : password not null, and length >=6
   bool isValidPassword(String? password) {
     bool isValid = true;
     if (password == null || password.isEmpty || password.length < 6) {
@@ -31,20 +32,27 @@ class _LoginScreenState extends State<LoginScreen> {
     return isValid;
   }
 
-  //isValidUserID
+  ///
+  ///rule: user is not null & length >=3
+  ///
   bool isValidUserID(String? userID) {
     bool isValid = true;
-    if (userID == null || userID.isEmpty || userID.length <= 3) {
+    if (userID == null || userID.isEmpty || userID.length < 3) {
       isValid = false;
     }
     return isValid;
   }
 
+  ///
+  ///kiem tra userid/password is valid
+  /// if isvalid goto login function
+  /// 
   void _submit(BuildContext context) async {
-    //kiem tra xem co thoa man validator
+
+    //1.kiem tra xem co thoa man validator
     final isValid = _formkey.currentState!.validate();
 
-    //chú ý:
+    //2. if valid convert to entered value else return
 
     if (isValid) {
       // neu thoa man thuc hien gan data vao entered userID/pass
@@ -52,34 +60,45 @@ class _LoginScreenState extends State<LoginScreen> {
     } else {
       return;
     }
-    //thuc hien ham login
+    //3. if valid =>thuc hien ham login
     _login(context);
   }
 
+  ///
+  ///1.Auth service login
+  ///1.1 api check BE
+  ///1.2 save user info to local
+  ///
+  ///2. show info or warning
+  ///3. if ok go to AuthCheck=>QA or Rest HomePage
+  ///
   void _login(BuildContext context) async {
     //String message = 'Login Successfully';
     //_isLogin = true;
-    AuthService apiAuthService = AuthService();
+    AuthService authService = AuthService();
 
     try {
       ApiRequestResult? loginResponse;
 
-      await apiAuthService
+      await authService
           .login(enteredUserID, enteredPassword)
           .then((response) {
         loginResponse = response;
 
         if (mounted) {
-          showInfoMessage(loginResponse!.message, context);
+          if (loginResponse!.ok==true)
+          {
+            showInfoMessage(loginResponse!.message, context);
+            Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => const AuthCheck()));
+            }
+          else
+          {
+            showWarningMessage(loginResponse!.message, context);
+          }
         }
-
-        //return message;
       });
-      if (mounted) {
-        //showInfoMessage(response.message);
-        Navigator.pushReplacement(context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()));
-      }
+      
     } catch (e) {
       if(mounted)
       {showInfoMessage(e.toString(), context);}

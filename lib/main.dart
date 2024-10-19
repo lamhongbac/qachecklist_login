@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
+import 'package:qachecklist_login/services/constants.dart';
 //import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/views/auth_check.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
@@ -11,14 +12,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   AuthService authService=AuthService();
-
-  await authService.isLogin().then((result){
-    AuthService.haveLogin=result;
-    //get user Info....
-    //AuthService.userInfo=null;
-
-  });
-
+  await authService.logout();
+  await authService.getLocalUserInfo();
 
   
   runApp(const MyApp());
@@ -31,7 +26,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'QA CheckList Login Demo',
+      title: AppConstants.appTitle,
       theme: ThemeData(
      
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
-import 'package:qachecklist_login/services/general.dart';
+//import 'package:qachecklist_login/services/general.dart';
 //import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
 import 'package:qachecklist_login/views/login_screen.dart';
@@ -20,11 +20,11 @@ class AuthCheck extends StatelessWidget {
   @override
   Widget build(BuildContext context)   {
 
-    Widget? activeScreen;
+    Widget?  activeScreen;
     //AuthService sqlAuthService = AuthService();
     //bool isLogin =false;
 
-    bool isLogin=  AuthService.haveLogin;
+    bool isLogin=  AuthService.userInfo!=null;
 
     if (isLogin) {
       //LoginResult userInfo=AuthService.userInfo!;
@@ -32,17 +32,18 @@ class AuthCheck extends StatelessWidget {
       
 
       //default homescreen
-      activeScreen=HomeScreen();
+      activeScreen=const HomeScreen();
 
-      if(AuthService.IsQAOfficer())
+      if(AuthService.isQaOfficer())
       {
         activeScreen = const QAOfficerHome();
       }
-      if(AuthService.IsRestaurantManager())
-      {
-        activeScreen = const RestaurantHome();
+      else{
+        if(AuthService.isRestaurantManager())
+        {
+          activeScreen = const RestaurantHome();
+        }
       }
-      
     } else {
       activeScreen = const LoginScreen();
     }

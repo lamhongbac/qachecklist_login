@@ -9,10 +9,10 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-  signOut()
+  signOut() async
   {
     AuthService authService=AuthService();
-    authService.logout();
+    await authService.logout();
     Navigator.pushReplacement(context, 
     MaterialPageRoute(builder:(contex) =>const LoginScreen()));
   }

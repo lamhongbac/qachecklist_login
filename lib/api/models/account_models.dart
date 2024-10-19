@@ -116,7 +116,8 @@ class LoginResult {
   ///
   factory LoginResult.fromJson(Map<String, dynamic> json) {
     List<ObjectRight> objectRights = [];
-
+    if (json['objectRights']==null)
+    { throw Exception('invalid user data type');}
     json['objectRights'].forEach((v) {
       ObjectRight objectRight = ObjectRight.fromJson(v as Map<String, dynamic>);
       objectRights.add(objectRight);

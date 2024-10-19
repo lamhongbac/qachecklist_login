@@ -17,3 +17,10 @@ class ApiConstants {
     'http://203.113.174.190:8004/api/app/MobileAccount/MobLogin';
     
 }
+class AppConstants{
+  
+  static const userInfo='userInfo';
+
+  static const appTitle="Login Function Demo";
+
+}
