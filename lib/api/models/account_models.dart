@@ -84,8 +84,11 @@ class LoginResult {
   String userName;
   String fullName;
   String emailAddress;
+
+  //role va object right can not be null
   List<String> roles;
   List<ObjectRight> objectRights;
+  
   int appID;
   int companyID;
   int managerID;
@@ -134,9 +137,10 @@ class LoginResult {
         userName: json['userName'] ?? "",
         fullName: json['fullName'] ?? "",
         emailAddress: json['emailAddress'] ?? "",
+        
         roles: roleList,
         objectRights: objectRights,
-        //ObjectRights.fromJson(json['objectRights'] as Map<String,dynamic>),
+        
         appID: json['appID'] ?? -1,
         companyID: json['companyID'] ?? -1,
         loginDate: json['loginDate'] ?? "",
@@ -152,14 +156,14 @@ class LoginResult {
       'userName': userName,
       'fullName': fullName,
       'emailAddress': emailAddress,
-      //'roles': roles.toString(),
-      //'objectRights': objectRights.toString(),
+      'roles': jsonEncode(roles) ,
+      'objectRights':jsonEncode(objectRights) ,
       'appID': appID,
       'companyID': companyID,
       'loginDate': loginDate,
       'managerEmail': managerEmail,
       'managerID': managerID,
-      //'storeIDs': storeIDs,
+      'storeIDs':storeIDs==null?{}: jsonEncode(storeIDs) ,
     };
   }
 }
