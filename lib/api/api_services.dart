@@ -54,43 +54,44 @@ class ApiService {
   ///
   Future<ApiRequestResult> login(LoginRequest request) async {
 
-     ApiRequestResult loginResponse=    ApiRequestResult(
-         content:null,
-         ok: false,
-         numOfRow: -1,         
-         message: "error:  not reach api server");
+    //  ApiRequestResult loginResponse=    ApiRequestResult(
+    //      content:null,
+    //      ok: false,
+    //      numOfRow: -1,         
+    //      message: "error:  not reach api server");
 
     String loginUrl = ApiConstants.mobLoginRequestUrl;
-    try {
-      await generalRequest(loginUrl, request).then((boDataProcessResult) {
+    return generalRequest(loginUrl, request);
+    //try {
+    //  return generalRequest(loginUrl, request).then((boDataProcessResult) //{
         
         //loginResponse.message=boDataProcessResult.message;
         //loginResponse.ok=boDataProcessResult.ok;
         
-        loginResponse=boDataProcessResult;
+        //loginResponse=boDataProcessResult;
 
-        if (boDataProcessResult.ok) {         
-          Map<String,dynamic> jcontent= boDataProcessResult.content as Map<String,dynamic> ;      
-          LoginResult loginResult=LoginResult.fromJson(jcontent) ;
+        //if (boDataProcessResult.ok) {         
+          //Map<String,dynamic> jcontent= boDataProcessResult.content as Map<String,dynamic> ;      
+          //LoginResult loginResult=LoginResult.fromJson(jcontent) ;
           //Map<String,dynamic> json_objectRights=loginResult.objectRights as Map<String,dynamic> ;      
           //List<ObjectRight> objectRights=ObjectRights.fromJson(json_objectRights);
 
-          loginResponse.content=loginResult;          
-        } 
+          //loginResponse.content=loginResult;          
+        //} 
        
-      });      
+      //});      
       
-    } catch (e) 
-    {
-      throw Exception(e);
-    }
+    //} catch (e) 
+    //{
+    //  throw Exception(e);
+    // }
     // rthroeturthron LoginResponse(
     //     jthrowtData:JwtData(accessToken: "", refreshToken: ""),
     //     ok: false, 
     //     loginDate:DateTime.now().toString(),
     //     message: 'general error message');
     
-    return loginResponse;
+    //return loginResponse;
     
   }
   //==> end login

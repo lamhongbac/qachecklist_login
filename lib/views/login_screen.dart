@@ -88,12 +88,14 @@ class _LoginScreenState extends State<LoginScreen> {
             showInfoMessage(loginResponse!.message, context);
             if (AuthService.isQaOfficer()) {
               Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const QAOfficerHome()));
-            } else {
-              if (AuthService.isRestaurantManager()) {
-                Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const RestaurantHome()));
-              }
+            } 
+            if (AuthService.isRestaurantManager()) {
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const RestaurantHome()));
             }
-            Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const HomeScreen()));
+            else{
+              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) 
+              => const HomeScreen()));
+            }
           } else {
             showWarningMessage(loginResponse!.message, context);
           }

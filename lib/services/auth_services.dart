@@ -29,8 +29,10 @@ class AuthService {
   ///logout=delete
   ///
   logout() async {
+    final prefs = await SharedPreferences.getInstance();
     if (await secureData.readData(AppConstants.userInfo) != null) {
       await secureData.deleteData(AppConstants.userInfo);
+      prefs.setBool(AppConstants.isLogin, false);
     }
   }
 
@@ -39,8 +41,13 @@ class AuthService {
   /// check if user is login or not
   ///
   Future<bool> isLogin() async {
-    AuthService.userInfo = await getLocalUserInfo();
-    return AuthService.userInfo != null;
+    final prefs = await SharedPreferences.getInstance();
+    bool isLogin = prefs.getBool(AppConstants.isLogin) ?? false;
+    AuthService.haveLogin = isLogin;
+    if (isLogin) {
+      AuthService.userInfo = await getLocalUserInfo();
+    }
+    return isLogin;
   }
 
   ///
@@ -58,15 +65,23 @@ class AuthService {
   }
 
   ///
-  ///save login result to local
+  ///+save login result to local
+  ///+dong thoi gan vao bien isLogin+LoginInfo
   ///
-  saveLocalUserInfo(LoginResult loginResult) async {
-    final prefs = await SharedPreferences.getInstance();
-    //save userInfo
-    await secureData.saveJson(AppConstants.userInfo, loginResult.toJson());
-    prefs.setBool(AppConstants.isLogin, true);
-
-    //checking...prefs.getBool('isLogin')
+  saveLocalUserInfo(Map<String, dynamic> jsonData) async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      //save vao secured data
+      await secureData.saveJson(AppConstants.userInfo, jsonData);
+      //save vao shared prefferences
+      prefs.setBool(AppConstants.isLogin, true);
+      //Gan vao bien static of Auth service
+      AuthService.haveLogin = true;
+      AuthService.userInfo = LoginResult.fromJson(jsonData);
+    } on Exception catch (e) {
+      print(e);
+      throw Exception('error function: save local data, exception: $e');
+    }
   }
 
   //
@@ -90,12 +105,11 @@ class AuthService {
 
     try {
       await apiService.login(loginRequest).then((result) {
+        //data type=dynamic
         loginResponse = result;
         if (loginResponse.ok) {
           //save local
           saveLocalUserInfo(loginResponse.content);
-          //save to service for loop check
-          AuthService.userInfo = loginResponse.content;
         }
       });
     } on Exception catch (e) {
