@@ -3,7 +3,7 @@
 import 'package:qachecklist_login/api/api_services.dart';
 import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/api/models/general_models.dart';
-import 'package:qachecklist_login/services/constants.dart';
+import 'package:qachecklist_login/services/app_constants.dart';
 import 'package:qachecklist_login/services/user_data_types.dart';
 //import 'package:qachecklist_login/models/userinfo.dart';
 import 'package:qachecklist_login/utils/secure_data.dart';
@@ -29,10 +29,11 @@ class AuthService {
   ///logout=delete
   ///
   logout() async {
-    final prefs = await SharedPreferences.getInstance();
+    //final prefs = await SharedPreferences.getInstance();
     if (await secureData.readData(AppConstants.userInfo) != null) {
       await secureData.deleteData(AppConstants.userInfo);
-      prefs.setBool(AppConstants.isLogin, false);
+      //prefs.setBool(AppConstants.isLogin, false);
+      AuthService.userInfo=null;
     }
   }
 
@@ -70,14 +71,15 @@ class AuthService {
   ///
   saveLocalUserInfo(Map<String, dynamic> jsonData) async {
     try {
-      final prefs = await SharedPreferences.getInstance();
+      //final prefs = await SharedPreferences.getInstance();
       //save vao secured data
       await secureData.saveJson(AppConstants.userInfo, jsonData);
       //save vao shared prefferences
-      prefs.setBool(AppConstants.isLogin, true);
+      //prefs.setBool(AppConstants.isLogin, true);
       //Gan vao bien static of Auth service
       AuthService.haveLogin = true;
       AuthService.userInfo = LoginResult.fromJson(jsonData);
+      
     } on Exception catch (e) {
       print(e);
       throw Exception('error function: save local data, exception: $e');
@@ -105,7 +107,7 @@ class AuthService {
 
     try {
       await apiService.login(loginRequest).then((result) {
-        //data type=dynamic
+        //api login return data type=dynamic
         loginResponse = result;
         if (loginResponse.ok) {
           //save local

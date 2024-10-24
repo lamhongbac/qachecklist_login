@@ -4,6 +4,7 @@ import 'package:qachecklist_login/services/auth_services.dart';
 //import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
 import 'package:qachecklist_login/views/login_screen.dart';
+import 'package:qachecklist_login/widgets/helpers.dart';
 import 'package:qachecklist_login/widgets/qa_home.dart';
 import 'package:qachecklist_login/widgets/rest_home.dart';
 
@@ -30,20 +31,9 @@ class AuthCheck extends StatelessWidget {
       //LoginResult userInfo=AuthService.userInfo!;
       //user_roles role=  user_roles.values.firstWhere((e) => e.toString() == 'user_roles.' + str);
       
-
+      activeScreen= getHomeScreen();
       //default homescreen
-      activeScreen=const HomeScreen();
-
-      if(AuthService.isQaOfficer())
-      {
-        activeScreen = const QAOfficerHome();
-      }
-      else{
-        if(AuthService.isRestaurantManager())
-        {
-          activeScreen = const RestaurantHome();
-        }
-      }
+      
     } else {
       activeScreen = const LoginScreen();
     }

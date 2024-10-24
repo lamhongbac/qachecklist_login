@@ -79,24 +79,19 @@ class _LoginScreenState extends State<LoginScreen> {
     //_isLogin = true;
     AuthService authService = AuthService();
     ApiRequestResult? loginResponse;
-    try {      
+    try {
       await authService.login(enteredUserID, enteredPassword).then((response) {
         loginResponse = response;
 
-        if (mounted) {
-          if (loginResponse!.ok == true) {
+        if (loginResponse!.ok == true) {
+          Widget homeScreen = getHomeScreen();
+          Navigator.pushReplacement(
+              context, MaterialPageRoute(builder: (context) => homeScreen));
+          if (mounted) {
             showInfoMessage(loginResponse!.message, context);
-            if (AuthService.isQaOfficer()) {
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const QAOfficerHome()));
-            } 
-            if (AuthService.isRestaurantManager()) {
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const RestaurantHome()));
-            }
-            else{
-              Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) 
-              => const HomeScreen()));
-            }
-          } else {
+          }
+        } else {
+          if (mounted) {
             showWarningMessage(loginResponse!.message, context);
           }
         }

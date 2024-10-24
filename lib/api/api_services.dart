@@ -1,8 +1,9 @@
 import 'package:http/http.dart' as http;
+import 'package:qachecklist_login/api/models/outlet_models.dart';
 
 import 'dart:convert';
 
-import 'package:qachecklist_login/services/constants.dart';
+import 'package:qachecklist_login/services/app_constants.dart';
 import 'package:qachecklist_login/api/models/account_models.dart';
 import 'package:qachecklist_login/api/models/general_models.dart';
 
@@ -17,6 +18,34 @@ class ApiService {
   ///
   ///
   Future<ApiRequestResult> generalRequest(String requestUrl, BaseApiRequest request) async {
+    //
+    var url = Uri.parse(requestUrl);
+    ApiRequestResult boDataProcessResult;
+    //
+    try {
+      //response la ket qua tra ve  tu 1 api request 
+      final response = await http.post(url,
+          headers: {
+            "Accept": "application/json",
+            "content-type": "application/json"
+          },
+          body: request.toJson());
+
+      //co the viet lai doan code nay them vao cac case error code khac nhau tra ve message khac nhau
+      if (response.statusCode == 200 || response.statusCode == 400) {        
+        //apiResponse: body cua api response
+        boDataProcessResult = ApiRequestResult.fromJson(
+          jsonDecode(response.body ) as Map<String, dynamic>);
+        //ok...          
+        return boDataProcessResult;
+      } else {
+        throw Exception('Request api has error code: ${response.statusCode}');
+      }
+    } catch (exception) {      
+      throw Exception(exception);
+    }
+  }
+Future<ApiRequestResult> getOutletRequest(String requestUrl, OutletRequestModel request) async {
     //
     var url = Uri.parse(requestUrl);
     ApiRequestResult boDataProcessResult;
@@ -101,4 +130,10 @@ class ApiService {
 
   ///03. IsLogin?
   /// Kiem tra Device+User tren BE va ghi nhan device is login or Not
+  /// 
+  Future<ApiRequestResult>  getOutlets(OutletRequestModel request)
+  {
+    String loginUrl = ApiConstants.outletRequestUrl;
+    return getOutletRequest(loginUrl, request);
+  }
 }

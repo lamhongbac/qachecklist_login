@@ -169,11 +169,3 @@ class LoginResult {
   }
 }
 
-class ObjectRights {
-  ObjectRights({required this.rights});
-  List<ObjectRight> rights = [];
-  //fromJson()
-  factory ObjectRights.fromJson(Map<String, dynamic> json) {
-    return ObjectRights(rights: json["rights"] ?? []);
-  }
-}

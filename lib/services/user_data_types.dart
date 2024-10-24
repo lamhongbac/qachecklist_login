@@ -17,3 +17,10 @@ enum appUserType
   UserID,
   
 }
+enum appUserRight
+{
+  create,
+  read,
+  update,
+  delete
+}

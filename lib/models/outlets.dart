@@ -3,7 +3,7 @@
 Map<String, dynamic> map = jsonDecode(<myJSONString>);
 var myRootNode = Root.fromJson(map);
 */ 
-class Outlet {
+class OutletModel {
     int? id;
     String? number;
     String? name;
@@ -44,9 +44,9 @@ class Outlet {
     String? enName;
     int? groupId;
 
-    Outlet({this.id, this.number, this.name, this.description, this.branchId, this.brandId, this.regionId, this.cityId, this.districtId, this.address, this.email, this.tel, this.website, this.tags, this.nps, this.latitude, this.longitude, this.openTime, this.closeTime, this.parking, this.picture, this.merchantId, this.floorId, this.categoryId, this.isActive, this.images, this.about, this.icon, this.priority, this.createdBy, this.createdOn, this.modifiedBy, this.modifiedOn, this.isDeleted, this.isFranchise, this.enDescription, this.enAddress, this.enName, this.groupId}); 
+    OutletModel({this.id, this.number, this.name, this.description, this.branchId, this.brandId, this.regionId, this.cityId, this.districtId, this.address, this.email, this.tel, this.website, this.tags, this.nps, this.latitude, this.longitude, this.openTime, this.closeTime, this.parking, this.picture, this.merchantId, this.floorId, this.categoryId, this.isActive, this.images, this.about, this.icon, this.priority, this.createdBy, this.createdOn, this.modifiedBy, this.modifiedOn, this.isDeleted, this.isFranchise, this.enDescription, this.enAddress, this.enName, this.groupId}); 
 
-    Outlet.fromJson(Map<String, dynamic> json) {
+    OutletModel.fromJson(Map<String, dynamic> json) {
         id = json['id'];
         number = json['number'];
         name = json['name'];
