@@ -34,6 +34,43 @@ class LoginRequest extends BaseApiRequest {
   }
 }
 
+class Login_Request  {
+  bool keepLogined;
+  String userType;
+  String userName;
+  String password;
+  int appID;
+  int companyID;
+
+  Login_Request(
+      {required this.keepLogined,
+      required this.userType,
+      required this.userName,
+      required this.password,
+      required this.appID,
+      required this.companyID
+      });
+
+  ///
+  ///hàm to Json convert object to Json , giup cho viec goi api
+  ///
+  
+  
+
+  Map<String,dynamic> toJson()
+  {
+    
+    return {
+      'appID': appID,
+      'companyID': companyID,
+      'keepLogined': keepLogined,
+      'userType': userType.trim(),
+      'userName': userName.trim(),
+      'password': password.trim(),
+    };
+
+  }
+}
 ///
 ///Class chua thong tin KQ login tra ve tu BE
 ///

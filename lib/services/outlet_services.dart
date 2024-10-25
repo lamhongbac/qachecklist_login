@@ -34,7 +34,7 @@ class OutletServices {
       'sortOrder': AppConstants.sortOrder,
       'searchText': AppConstants.searchText,
       'pageIndex': AppConstants.pageIndex,
-      'pageSize': AppConstants.pageSize,
+      'pageSize': "100",
       'cityID': AppConstants.cityID,
       'districtID': AppConstants.districtID
     });
