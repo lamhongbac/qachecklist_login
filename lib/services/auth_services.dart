@@ -97,16 +97,18 @@ class AuthService {
         numOfRow: -1,
         message: "error:  not reach api server");
 
-    LoginRequest loginRequest = LoginRequest(
+    Login_Request loginRequest = Login_Request(
         keepLogined: false,
         userType: appUserType.UserID.toString(),
         userName: userName,
-        password: password);
+        password: password,
+        appID: ApiConstants.appID,
+        companyID: ApiConstants.companyID);
 
     ApiService apiService = ApiService();
 
     try {
-      await apiService.login(loginRequest).then((result) {
+      await apiService.loginRequest(loginRequest).then((result) {
         //api login return data type=dynamic
         loginResponse = result;
         if (loginResponse.ok) {

@@ -17,8 +17,9 @@ class ApiService {
   ///
   ///
   ///
-  Future<ApiRequestResult> generalRequest(String requestUrl, BaseApiRequest request) async {
+  Future<ApiRequestResult> loginRequest(Login_Request request) async {
     //
+    String requestUrl =ApiConstants.mobLoginRequestUrl; 
     var url = Uri.parse(requestUrl);
     ApiRequestResult boDataProcessResult;
     //
@@ -29,7 +30,8 @@ class ApiService {
             "Accept": "application/json",
             "content-type": "application/json"
           },
-          body: request.toJson());
+          body: jsonEncode(request.toJson())
+        ); //json enCode request.tojson
 
       //co the viet lai doan code nay them vao cac case error code khac nhau tra ve message khac nhau
       if (response.statusCode == 200 || response.statusCode == 400) {        
@@ -45,8 +47,9 @@ class ApiService {
       throw Exception(exception);
     }
   }
-Future<ApiRequestResult> getOutletRequest(String requestUrl, OutletRequestModel request) async {
+  Future<ApiRequestResult> getOutletRequest( OutletRequestModel request) async {
     //
+    String requestUrl=ApiConstants.getOutletRequestUrl;
     var url = Uri.parse(requestUrl);
     ApiRequestResult boDataProcessResult;
     //
@@ -57,7 +60,7 @@ Future<ApiRequestResult> getOutletRequest(String requestUrl, OutletRequestModel 
             "Accept": "application/json",
             "content-type": "application/json"
           },
-          body: request.toJson());
+          body: json.encode( request.toJson()));
 
       //co the viet lai doan code nay them vao cac case error code khac nhau tra ve message khac nhau
       if (response.statusCode == 200 || response.statusCode == 400) {        
@@ -81,7 +84,7 @@ Future<ApiRequestResult> getOutletRequest(String requestUrl, OutletRequestModel 
   ///LoginResponse: ket qua của login
   ///co the  la thanh cong hay that bai
   ///
-  Future<ApiRequestResult> login(LoginRequest request) async {
+  //Future<ApiRequestResult> login(LoginRequest request) async {
 
     //  ApiRequestResult loginResponse=    ApiRequestResult(
     //      content:null,
@@ -89,8 +92,8 @@ Future<ApiRequestResult> getOutletRequest(String requestUrl, OutletRequestModel 
     //      numOfRow: -1,         
     //      message: "error:  not reach api server");
 
-    String loginUrl = ApiConstants.mobLoginRequestUrl;
-    return generalRequest(loginUrl, request);
+    //String loginUrl = ApiConstants.mobLoginRequestUrl;
+    //return generalRequest(loginUrl, request);
     //try {
     //  return generalRequest(loginUrl, request).then((boDataProcessResult) //{
         
@@ -122,18 +125,11 @@ Future<ApiRequestResult> getOutletRequest(String requestUrl, OutletRequestModel 
     
     //return loginResponse;
     
-  }
+  //}
   //==> end login
   ///02.Api Logout
   ///BE: kiem tra va ghi nhan logout
   ///
 
-  ///03. IsLogin?
-  /// Kiem tra Device+User tren BE va ghi nhan device is login or Not
-  /// 
-  Future<ApiRequestResult>  getOutlets(OutletRequestModel request)
-  {
-    String loginUrl = ApiConstants.outletRequestUrl;
-    return getOutletRequest(loginUrl, request);
-  }
+  
 }

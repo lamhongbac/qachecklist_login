@@ -15,7 +15,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   OutletServices outletService=OutletServices();
   AuthService authService=AuthService();
-  //await authService.logout();
+  await authService.logout();
   await authService.getLocalUserInfo();
   //await outletService.getLocalData();
   

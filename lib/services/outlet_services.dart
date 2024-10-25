@@ -34,12 +34,12 @@ class OutletServices {
       'sortOrder': AppConstants.sortOrder,
       'searchText': AppConstants.searchText,
       'pageIndex': AppConstants.pageIndex,
-      'pageSize': AppConstants.pageSize,
+      'pageSize': "100",
       'cityID': AppConstants.cityID,
       'districtID': AppConstants.districtID
     });
     ApiService apiService = ApiService();
-    outletResponse = await apiService.getOutlets(requestModel);
+    outletResponse = await apiService.getOutletRequest(requestModel);
     if (outletResponse.ok)
     {
       LocalFileManager localFileManager=LocalFileManager();

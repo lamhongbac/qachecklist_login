@@ -10,13 +10,14 @@ class ApiConstants {
 
   static const String loginRequestUrl =
       'http://203.113.174.190:8004/api/Account/Login';
-  static const String outletRequestUrl =
+  static const String getOutletRequestUrl =
       "http://203.113.174.190:8004/api/Outlet/GetOutletsByPage";
 
   static const String mobLoginRequestUrl =
       'http://203.113.174.190:8004/api/app/MobileAccount/MobLogin';
-  static const String outletPendingRequestUrl =
+  static const String getOutletPendingRequestUrl =
       'http://203.113.174.190:8004/api/app/Outlet/GetOutletWithPending';
+
 }
 
 class AppConstants {
