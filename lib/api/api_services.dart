@@ -47,7 +47,7 @@ class ApiService {
       throw Exception(exception);
     }
   }
-Future<ApiRequestResult> getOutletRequest(String requestUrl, OutletRequestModel request) async {
+Future<ApiRequestResult> getOutletRequest( OutletRequestModel request) async {
     //
     String requestUrl=ApiConstants.getOutletRequestUrl;
     var url = Uri.parse(requestUrl);

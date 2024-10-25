@@ -42,9 +42,8 @@ class OutletServices {
     outletResponse = await apiService.getOutletRequest(requestModel);
     if (outletResponse.ok)
     {
-      LocalFileManager localFileManager=LocalFileManager();
-      
-      localFileManager.saveLocalFile(AppConstants.appSettingsFileName, jsonEncode(outletResponse.content), true);
+      //LocalFileManager localFileManager=LocalFileManager();      
+      //localFileManager.saveLocalFile(AppConstants.appSettingsFileName, jsonEncode(outletResponse.content), true);
 
     }
     return outletResponse;

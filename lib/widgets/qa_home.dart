@@ -1,5 +1,7 @@
 //qa_home danh cho QA officer home
 //rest_home danh cho Rest Home
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:qachecklist_login/api/models/general_models.dart';
 import 'package:qachecklist_login/models/outlets.dart';
@@ -7,30 +9,35 @@ import 'package:qachecklist_login/models/outlets.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/services/outlet_services.dart';
 import 'package:qachecklist_login/views/login_screen.dart';
+import 'package:qachecklist_login/widgets/outlet_wg.dart';
 
 class QAOfficerHome extends StatefulWidget {
-  const QAOfficerHome({super.key});
-  //List<OutletModel> outlets;
+  QAOfficerHome({super.key});
 
   @override
   State<QAOfficerHome> createState() => _QAOfficerHomeState();
 }
 
 class _QAOfficerHomeState extends State<QAOfficerHome> {
-
-  Future<List<OutletModel>?> getOutlets() async {
+  List<OutletModel> outlets = [];
+  getOutlets() async {
     OutletServices outletServices = OutletServices();
-    if (AuthService.userInfo!=null) {
+    if (AuthService.userInfo != null) {
       String userID = AuthService.userInfo!.userName;
       ApiRequestResult apiRequestResult =await outletServices.getOutlets(userID);
+
       if (apiRequestResult.ok) {
         setState(() {
-          //widget.outlets=apiRequestResult.content;
-        });
-        
+          List<dynamic> lists=apiRequestResult.content;
+          lists.forEach((e) => outlets.add(OutletModel.fromJson((e))));
 
+          print(outlets.length);
+
+        });
       } else {
         //info
+         print('no outlet find');
+
       }
       return null;
     }
@@ -45,6 +52,22 @@ class _QAOfficerHomeState extends State<QAOfficerHome> {
 
   @override
   Widget build(BuildContext context) {
+    Widget? activeWg;
+    if (outlets.isEmpty) {
+      activeWg =  Container(
+        child:const Text('No outlet'),
+      );
+    } else {
+      activeWg = ListView.builder(
+        itemCount: outlets.length,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 100,
+            padding: const EdgeInsets.symmetric(vertical: 10),
+            child:Text(outlets[index].name!) );
+        },
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         title: const Text('QA Officer Home Screen'),
@@ -66,7 +89,8 @@ class _QAOfficerHomeState extends State<QAOfficerHome> {
         child: Icon(Icons.logout_rounded),
         backgroundColor: Colors.green,
       ),
-      body: const Center(child: Text('Home screen')),
-    );
+      body: activeWg
+      );
+    
   }
 }

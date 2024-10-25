@@ -34,9 +34,9 @@ class OutletModel {
     String? icon;
     String? priority;
     String? createdBy;
-    DateTime? createdOn;
+    String? createdOn;
     String? modifiedBy;
-    DateTime? modifiedOn;
+    String? modifiedOn;
     bool? isDeleted;
     bool? isFranchise;
     String? enDescription;

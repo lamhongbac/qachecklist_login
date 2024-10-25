@@ -35,7 +35,7 @@ Widget getHomeScreen() {
 
       if(AuthService.isQaOfficer())
       {
-        activeScreen = const QAOfficerHome();
+        activeScreen =  QAOfficerHome();
       }
       else{
         if(AuthService.isRestaurantManager())

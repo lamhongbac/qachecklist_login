@@ -18,26 +18,26 @@ class OutletRequestModel  {
     OutletRequestModel({this.companyCode, this.sortProperty, this.sortOrder, this.searchText, this.pageIndex, this.pageSize, this.cityID, this.districtID}); 
 
     OutletRequestModel.fromJson(Map<String, dynamic> json) {
-        companyCode = json['CompanyCode'];
-        sortProperty = json['SortProperty'];
+        companyCode = json['companyCode'];
+        sortProperty = json['sortProperty'];
         sortOrder = json['sortOrder'];
-        searchText = json['SearchText'];
-        pageIndex = json['PageIndex'];
-        pageSize = json['PageSize'];
-        cityID = json['CityID'];
-        districtID = json['DistrictID'];
+        searchText = json['searchText'];
+        pageIndex = json['pageIndex'];
+        pageSize = json['pageSize'];
+        cityID = json['cityID'];
+        districtID = json['districtID'];
     }
 
     Map<String, dynamic> toJson() {
         final Map<String, dynamic> data = Map<String, dynamic>();
-        data['CompanyCode'] = companyCode;
-        data['SortProperty'] = sortProperty;
+        data['companyCode'] = companyCode;
+        data['sortProperty'] = sortProperty;
         data['sortOrder'] = sortOrder;
-        data['SearchText'] = searchText;
-        data['PageIndex'] = pageIndex;
-        data['PageSize'] = pageSize;
-        data['CityID'] = cityID;
-        data['DistrictID'] = districtID;
+        data['searchText'] = searchText;
+        data['pageIndex'] = pageIndex;
+        data['pageSize'] = pageSize;
+        data['cityID'] = cityID;
+        data['districtID'] = districtID;
         return data;
     }
 }

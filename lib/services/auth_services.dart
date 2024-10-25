@@ -65,10 +65,7 @@ class AuthService {
     }
   }
 
-  ///
-  ///+save login result to local
-  ///+dong thoi gan vao bien isLogin+LoginInfo
-  ///
+  ///jsonData: content cua BO, BO =body cua api
   saveLocalUserInfo(Map<String, dynamic> jsonData) async {
     try {
       //final prefs = await SharedPreferences.getInstance();

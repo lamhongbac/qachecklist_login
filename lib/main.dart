@@ -13,9 +13,9 @@ import 'package:qachecklist_login/widgets/rest_home.dart';
 void main() async {
   
   WidgetsFlutterBinding.ensureInitialized();
-  OutletServices outletService=OutletServices();
+  //OutletServices outletService=OutletServices();
   AuthService authService=AuthService();
-  await authService.logout();
+  //await authService.logout();
   await authService.getLocalUserInfo();
   //await outletService.getLocalData();
   
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
-        '/qa_home': (context) => const QAOfficerHome(),
+        '/qa_home': (context) =>  QAOfficerHome(),
         '/rest_home': (context) => const RestaurantHome(),
       },
     );
