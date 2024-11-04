@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/services/app_constants.dart';
 import 'package:qachecklist_login/services/outlet_services.dart';
@@ -9,17 +10,21 @@ import 'package:qachecklist_login/views/login_screen.dart';
 import 'package:qachecklist_login/widgets/qa_home.dart';
 import 'package:qachecklist_login/widgets/rest_home.dart';
 
-
 void main() async {
-  
+
   WidgetsFlutterBinding.ensureInitialized();
-  //OutletServices outletService=OutletServices();
-  AuthService authService=AuthService();
-  //await authService.logout();
+  AuthService authService = AuthService();
   await authService.getLocalUserInfo();
-  //await outletService.getLocalData();
-  
-  runApp(const MyApp());
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]).then((fn) {
+    //OutletServices outletService=OutletServices();
+    ////await authService.logout();
+    //await outletService.getLocalData();
+    runApp(const MyApp());
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +36,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: AppConstants.appTitle,
       theme: ThemeData(
-     
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
@@ -39,10 +43,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
-        '/qa_home': (context) =>  QAOfficerHome(),
+        '/qa_home': (context) => QAOfficerHome(),
         '/rest_home': (context) => const RestaurantHome(),
       },
     );
   }
 }
-
