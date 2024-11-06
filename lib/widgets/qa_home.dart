@@ -9,6 +9,7 @@ import 'package:qachecklist_login/models/outlets.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/services/outlet_services.dart';
 import 'package:qachecklist_login/views/login_screen.dart';
+import 'package:qachecklist_login/widgets/helpers.dart';
 import 'package:qachecklist_login/widgets/outlet_wg.dart';
 
 class QAOfficerHome extends StatefulWidget {
@@ -19,7 +20,9 @@ class QAOfficerHome extends StatefulWidget {
 }
 
 class _QAOfficerHomeState extends State<QAOfficerHome> {
+
   List<OutletModel> outlets = [];
+
   getOutlets() async {
     OutletServices outletServices = OutletServices();
     if (AuthService.userInfo != null) {
@@ -31,12 +34,13 @@ class _QAOfficerHomeState extends State<QAOfficerHome> {
           List<dynamic> lists=apiRequestResult.content;
           lists.forEach((e) => outlets.add(OutletModel.fromJson((e))));
 
-          print(outlets.length);
+          //print(outlets.length);
 
         });
       } else {
         //info
-         print('no outlet find');
+        
+         showInfoMessage('no outlet find',context);
 
       }
       return null;
