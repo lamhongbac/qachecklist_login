@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:qachecklist_login/datas/master_datas.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/services/app_constants.dart';
 import 'package:qachecklist_login/services/outlet_services.dart';
@@ -16,6 +17,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AuthService authService = AuthService();
   await authService.getLocalUserInfo();
+  MasterDataService masterDataService =MasterDataService();
+  masterDataService.getOutlet();
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
