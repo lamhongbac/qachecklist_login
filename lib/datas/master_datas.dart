@@ -6,32 +6,22 @@ import 'package:qachecklist_login/services/outlet_services.dart';
 ///Data se dc cap nhat tu BE thong qua
 ///init app
 ///synchronization
-class MasterDataService
-{
-  static List<OutletModel> outletdatas=[];
+class MasterDataService {
+  static List<OutletModel> outletdatas = [];
+
+  //
   //qachecklist master data
-
-  void getOutlet() async
-  {
-    
+  //
+  void getMasterData() async {
     OutletServices outletServices = OutletServices();
-   
-      
-      ApiRequestResult apiRequestResult =await outletServices.getOutlets('all');
 
-      if (apiRequestResult.ok) {
-        outletdatas.clear();
-          List<dynamic> lists=apiRequestResult.content;
-          lists.forEach((e) => outletdatas.add(OutletModel.fromJson((e))));
+    ApiRequestResult apiRequestResult = await outletServices.getOutlets('all');
 
-          //print(outlets.length);
-
-        };
-      
-      return null;
+    if (apiRequestResult.ok) {
+      outletdatas.clear();
+      List<dynamic> lists = apiRequestResult.content;
+      lists.forEach((e) => outletdatas.add(OutletModel.fromJson((e))));
     }
+    
   }
-
-  
-
 }
