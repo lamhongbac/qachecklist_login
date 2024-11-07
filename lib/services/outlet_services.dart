@@ -7,7 +7,7 @@ import 'package:qachecklist_login/api/models/outlet_models.dart';
 import 'package:qachecklist_login/models/outlets.dart';
 //import 'package:qachecklist_login/models/outlets.dart';
 import 'package:qachecklist_login/services/app_constants.dart';
-import 'package:qachecklist_login/utils/local_file.dart';
+//import 'package:qachecklist_login/utils/local_file.dart';
 
 class OutletServices {
   static List<OutletModel> outletDatas = [];

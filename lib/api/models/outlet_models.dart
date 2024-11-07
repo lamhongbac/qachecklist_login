@@ -3,7 +3,7 @@
 Map<String, dynamic> map = jsonDecode(<myJSONString>);
 var myRootNode = Root.fromJson(map);
 */ 
-import 'package:qachecklist_login/api/models/general_models.dart';
+//import 'package:qachecklist_login/api/models/general_models.dart';
 
 class OutletRequestModel  {
     String? companyCode;
