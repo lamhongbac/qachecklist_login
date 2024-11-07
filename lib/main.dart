@@ -19,21 +19,21 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AuthService authService = AuthService();
   await authService.getLocalUserInfo();
-  MasterDataService masterDataService =MasterDataService();
-  masterDataService.getMasterData();
+  // MasterDataService masterDataService =MasterDataService();
+  // masterDataService.getMasterData();
   registerErrorHandlers();
 
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown,
+  // ]).then((fn) {
+  //   const ProviderScope(
+   //    child: MyApp());
+  // });
+  //runApp(const MyApp());
   SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]).then((fn) {
-    //OutletServices outletService=OutletServices();
-    ////await authService.logout();
-    //await outletService.getLocalData();
-    const ProviderScope(
-      child: MyApp()
-    );
-  });
+    DeviceOrientation.portraitUp
+  ]).then((fn){runApp(const ProviderScope(child: MyApp()));});
 }
 
 class MyApp extends StatelessWidget {
