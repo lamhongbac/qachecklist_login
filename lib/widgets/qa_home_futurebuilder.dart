@@ -72,7 +72,7 @@ class _QAOfficerHomeFutureBuilderState extends State<QAOfficerHomeFutureBuilder>
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('QA Officer Home Screen'),
+        title: const Text('QA Officer Home Screen-future builder'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout_rounded),
