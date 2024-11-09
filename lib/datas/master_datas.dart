@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qachecklist_login/api/models/general_models.dart';
 import 'package:qachecklist_login/models/outlets.dart';
 import 'package:qachecklist_login/services/outlet_services.dart';
@@ -25,3 +26,6 @@ class MasterDataService {
     
   }
 }
+final outletProvider=Provider((ref){
+  return MasterDataService.outletdatas;
+});

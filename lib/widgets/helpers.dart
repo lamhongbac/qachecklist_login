@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
-import 'package:qachecklist_login/widgets/qa_home.dart';
+//import 'package:qachecklist_login/widgets/qa_home.dart';
+import 'package:qachecklist_login/widgets/qa_home_copy.dart';
+import 'package:qachecklist_login/widgets/qa_home_provider.dart';
 import 'package:qachecklist_login/widgets/rest_home.dart';
 
 Widget addVerticalSpace(double height) {
@@ -35,7 +37,7 @@ Widget getHomeScreen() {
 
       if(AuthService.isQaOfficer())
       {
-        activeScreen =  QAOfficerHome();
+        activeScreen =  QAOfficerHomeProvider();
       }
       else{
         if(AuthService.isRestaurantManager())
