@@ -19,8 +19,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AuthService authService = AuthService();
   await authService.getLocalUserInfo();
-  // MasterDataService masterDataService =MasterDataService();
-  // masterDataService.getMasterData();
+   MasterDataService masterDataService =MasterDataService();
+   masterDataService.getMasterData();
   registerErrorHandlers();
 
   // SystemChrome.setPreferredOrientations([
