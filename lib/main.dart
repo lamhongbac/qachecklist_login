@@ -15,12 +15,14 @@ import 'package:qachecklist_login/widgets/qa_home.dart';
 import 'package:qachecklist_login/widgets/rest_home.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
   AuthService authService = AuthService();
   await authService.getLocalUserInfo();
-   MasterDataService masterDataService =MasterDataService();
-   masterDataService.getMasterData();
+  if (AuthService.userInfo != null) {
+    String userID = AuthService.userInfo!.userName;
+    MasterDataService masterDataService = MasterDataService();
+    final masterDataReady = await masterDataService.getMasterData(userID);
+  }
   registerErrorHandlers();
 
   // SystemChrome.setPreferredOrientations([
@@ -28,12 +30,13 @@ void main() async {
   //   DeviceOrientation.portraitDown,
   // ]).then((fn) {
   //   const ProviderScope(
-   //    child: MyApp());
+  //    child: MyApp());
   // });
   //runApp(const MyApp());
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp
-  ]).then((fn){runApp(const ProviderScope(child: MyApp()));});
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((fn) {
+    runApp(const ProviderScope(child: MyApp()));
+  });
 }
 
 class MyApp extends StatelessWidget {
@@ -58,6 +61,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
 void registerErrorHandlers() {
   // * Show some error UI if any uncaught exception happens
   FlutterError.onError = (FlutterErrorDetails details) {

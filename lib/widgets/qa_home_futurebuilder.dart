@@ -3,7 +3,9 @@
 //import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qachecklist_login/api/models/general_models.dart';
+import 'package:qachecklist_login/datas/master_datas.dart';
 import 'package:qachecklist_login/models/outlets.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/services/outlet_services.dart';
@@ -11,30 +13,42 @@ import 'package:qachecklist_login/views/login_screen.dart';
 import 'package:qachecklist_login/widgets/helpers.dart';
 //import 'package:qachecklist_login/widgets/outlet_wg.dart';
 
-class QAOfficerHomeFutureBuilder extends StatefulWidget {
+class QAOfficerHomeFutureBuilder extends ConsumerStatefulWidget {
   QAOfficerHomeFutureBuilder({super.key});
 
   @override
-  State<QAOfficerHomeFutureBuilder> createState() => _QAOfficerHomeFutureBuilderState();
-  
+  ConsumerState<QAOfficerHomeFutureBuilder> createState() =>
+      _QAOfficerHomeFutureBuilderState();
 }
 
-class _QAOfficerHomeFutureBuilderState extends State<QAOfficerHomeFutureBuilder> {
+class _QAOfficerHomeFutureBuilderState
+    extends ConsumerState<QAOfficerHomeFutureBuilder> {
+  List<OutletModel> outlets = [];
 
- List<OutletModel> outlets = [];
+  Future<List<OutletModel>> getOutlets() async {
+    outlets = ref.watch(outletProvider);
 
- Future<List<OutletModel>> getOutlets() async {
-   
-    OutletServices outletServices = OutletServices();
-    if (AuthService.userInfo != null) {
-      String userID = AuthService.userInfo!.userName;
-      ApiRequestResult apiRequestResult =await outletServices.getOutlets(userID);
-      if (apiRequestResult.ok) {       
-          List<dynamic> lists=apiRequestResult.content;
-          lists.forEach((e) => outlets.add(OutletModel.fromJson((e))));
-          //print(outlets.length);
-        };  
+    if (outlets.isEmpty) {
+      //OutletServices outletServices = OutletServices();
+      // if (AuthService.userInfo != null) {
+      //   String userID = AuthService.userInfo!.userName;
+      //   ApiRequestResult apiRequestResult =
+      //       await outletServices.getOutlets(userID);
+      //   if (apiRequestResult.ok) {
+      //     List<dynamic> lists = apiRequestResult.content;
+      //     lists.forEach((e) => outlets.add(OutletModel.fromJson((e))));
+
+      //     if(outlets.isNotEmpty){
+      //       MasterDataService.outletdatas=outlets;
+      //     }
+      //   }
+      if (AuthService.userInfo != null) {
+        String userID = AuthService.userInfo!.userName;
+        MasterDataService masterDataService = MasterDataService();
+        await masterDataService.getMasterData(userID);
+      }
     }
+    outlets = ref.watch(outletProvider);
     return outlets;
   }
 
@@ -46,13 +60,13 @@ class _QAOfficerHomeFutureBuilderState extends State<QAOfficerHomeFutureBuilder>
   }
 
   @override
-  void initState() {    
+  void initState() {
     super.initState();
     //getOutlets();
   }
+
   @override
   Widget build(BuildContext context) {
-   
     // Widget? activeWg;
     // if (outlets.length==0)
     // {
@@ -66,58 +80,47 @@ class _QAOfficerHomeFutureBuilderState extends State<QAOfficerHomeFutureBuilder>
     //           padding: const EdgeInsets.symmetric(vertical: 10),
     //           child:ListView.builder(
     //             itemCount: outlets.length,
-    //             itemBuilder: (context, index) 
+    //             itemBuilder: (context, index)
     //             {return Text(outlets[index].name!);} ));
     // }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('QA Officer Home Screen-future builder'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.logout_rounded),
-            tooltip: 'Logout...',
-            onPressed: () {
-              // handle the press
-              signOut(context);
-            },
-          )
-        ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          getOutlets();
-        },
-        backgroundColor: Colors.green,
-        child: const Icon(Icons.logout_rounded),
-       
-      ),
-      body: FutureBuilder(builder: (context, snapshot)  {
-        if (snapshot.connectionState == ConnectionState.done) 
-        {
-          return Container(
-              height: 100,
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child:ListView.builder(
-                itemCount: outlets.length,
-                itemBuilder: (context, index) 
-                {return Text(outlets[index].name!);} ));
-        }
-        else
-        {
-          return const Center(
-            child: Text('No outlet found...'));
-        }
-
-
-
-      },future: getOutlets(),)
-        
-
-
-
-     
-      );
-    
+        appBar: AppBar(
+          title: const Text('QA Officer Build the future'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.logout_rounded),
+              tooltip: 'Logout...',
+              onPressed: () {
+                // handle the press
+                signOut(context);
+              },
+            )
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            getOutlets();
+          },
+          backgroundColor: Colors.green,
+          child: const Icon(Icons.logout_rounded),
+        ),
+        body: FutureBuilder(
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              return Container(
+                  height: 100,
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: ListView.builder(
+                      itemCount: outlets.length,
+                      itemBuilder: (context, index) {
+                        return Text(outlets[index].name!);
+                      }));
+            } else {
+              return const Center(child: Text('No outlet found...'));
+            }
+          },
+          future: getOutlets(),
+        ));
   }
 }

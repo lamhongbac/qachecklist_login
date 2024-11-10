@@ -13,17 +13,17 @@ class MasterDataService {
   //
   //qachecklist master data
   //
-  void getMasterData() async {
+  Future<bool> getMasterData(String userID) async {
     OutletServices outletServices = OutletServices();
-
-    ApiRequestResult apiRequestResult = await outletServices.getOutlets('all');
-
-    if (apiRequestResult.ok) {
+    bool OK=false;
+    ApiRequestResult apiRequestResult = await outletServices.getOutlets(userID);
+    OK=apiRequestResult.ok;
+    if (OK) {
       outletdatas.clear();
       List<dynamic> lists = apiRequestResult.content;
       lists.forEach((e) => outletdatas.add(OutletModel.fromJson((e))));
     }
-    
+    return OK;
   }
 }
 final outletProvider=Provider((ref){
