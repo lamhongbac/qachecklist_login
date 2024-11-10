@@ -14,6 +14,8 @@ import 'package:qachecklist_login/views/login_screen.dart';
 import 'package:qachecklist_login/widgets/qa_home.dart';
 import 'package:qachecklist_login/widgets/rest_home.dart';
 
+bool masterDataReady=false;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   AuthService authService = AuthService();
@@ -21,7 +23,7 @@ void main() async {
   if (AuthService.userInfo != null) {
     String userID = AuthService.userInfo!.userName;
     MasterDataService masterDataService = MasterDataService();
-    final masterDataReady = await masterDataService.getMasterData(userID);
+    masterDataReady = await masterDataService.getMasterData(userID);
   }
   registerErrorHandlers();
 

@@ -11,6 +11,7 @@ import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/services/outlet_services.dart';
 import 'package:qachecklist_login/views/login_screen.dart';
 import 'package:qachecklist_login/widgets/helpers.dart';
+import 'package:qachecklist_login/widgets/outlet_wg.dart';
 //import 'package:qachecklist_login/widgets/outlet_wg.dart';
 
 class QAOfficerHomeFutureBuilder extends ConsumerStatefulWidget {
@@ -29,19 +30,7 @@ class _QAOfficerHomeFutureBuilderState
     outlets = ref.watch(outletProvider);
 
     if (outlets.isEmpty) {
-      //OutletServices outletServices = OutletServices();
-      // if (AuthService.userInfo != null) {
-      //   String userID = AuthService.userInfo!.userName;
-      //   ApiRequestResult apiRequestResult =
-      //       await outletServices.getOutlets(userID);
-      //   if (apiRequestResult.ok) {
-      //     List<dynamic> lists = apiRequestResult.content;
-      //     lists.forEach((e) => outlets.add(OutletModel.fromJson((e))));
-
-      //     if(outlets.isNotEmpty){
-      //       MasterDataService.outletdatas=outlets;
-      //     }
-      //   }
+     
       if (AuthService.userInfo != null) {
         String userID = AuthService.userInfo!.userName;
         MasterDataService masterDataService = MasterDataService();
@@ -51,6 +40,31 @@ class _QAOfficerHomeFutureBuilderState
     outlets = ref.watch(outletProvider);
     return outlets;
   }
+showAlertDialog(BuildContext context, String title, String message) {
+
+  // set up the button
+  Widget okButton = TextButton(
+    child: Text("OK"),
+    onPressed: () { },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(title),
+    content: Text(message),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
 
   signOut(BuildContext context) async {
     AuthService authService = AuthService();
@@ -67,22 +81,10 @@ class _QAOfficerHomeFutureBuilderState
 
   @override
   Widget build(BuildContext context) {
-    // Widget? activeWg;
-    // if (outlets.length==0)
-    // {
-    //     activeWg=const Center(
-    //         child: Text('No outlet found...'));
-    // }
-    // else
-    // {
-    //     activeWg=Container(
-    //           height: 100,
-    //           padding: const EdgeInsets.symmetric(vertical: 10),
-    //           child:ListView.builder(
-    //             itemCount: outlets.length,
-    //             itemBuilder: (context, index)
-    //             {return Text(outlets[index].name!);} ));
-    // }
+    void addCheck()
+    {
+      showAlertDialog(context,'Check...','outletName');
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -114,7 +116,7 @@ class _QAOfficerHomeFutureBuilderState
                   child: ListView.builder(
                       itemCount: outlets.length,
                       itemBuilder: (context, index) {
-                        return Text(outlets[index].name!);
+                        return OutletItem(outletItem:outlets[index]) ;
                       }));
             } else {
               return const Center(child: Text('No outlet found...'));
