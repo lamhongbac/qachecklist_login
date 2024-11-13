@@ -9,6 +9,7 @@ import 'package:qachecklist_login/datas/master_datas.dart';
 import 'package:qachecklist_login/models/outlets.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/services/outlet_services.dart';
+import 'package:qachecklist_login/utils/dialog_alert.dart';
 import 'package:qachecklist_login/views/login_screen.dart';
 import 'package:qachecklist_login/widgets/helpers.dart';
 import 'package:qachecklist_login/widgets/outlet_wg.dart';
@@ -40,32 +41,7 @@ class _QAOfficerHomeFutureBuilderState
     outlets = ref.watch(outletProvider);
     return outlets;
   }
-showAlertDialog(BuildContext context, String title, String message) {
-
-  // set up the button
-  Widget okButton = TextButton(
-    child: Text("OK"),
-    onPressed: () { },
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text(title),
-    content: Text(message),
-    actions: [
-      okButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-}
-
+  
   signOut(BuildContext context) async {
     AuthService authService = AuthService();
     await authService.logout();
