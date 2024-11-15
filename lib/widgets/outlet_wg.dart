@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qachecklist_login/models/outlets.dart';
+import 'package:qachecklist_login/utils/dialog_alert.dart';
+import 'package:qachecklist_login/views/qa_checklist_report.dart';
 
 class OutletItem extends StatelessWidget {
   const OutletItem({super.key, required this.outletItem});
@@ -16,22 +18,9 @@ class OutletItem extends StatelessWidget {
         children: [Text(outletName),
         TextButton(onPressed: () => showDialog<String>(
         context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: const Text('AlertDialog Title'),
-          content: const Text('AlertDialog description'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-              child: const Text('Cancel'),
-            ),
-            TextButton(
-              onPressed: () => Navigator.pop(context, 'OK'),
-              child: const Text('OK'),
-            ),
-          ],
-        ),
+        builder: (BuildContext context) => ShowDialog(title: outletName,message: 'do you want to check?',)
       ),
-      child: const Text('Show Dialog'),
+      child: const Text('...Checking'),
     )      ]
         //Text(outlets[index].name!)
         ),

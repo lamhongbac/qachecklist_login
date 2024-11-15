@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qachecklist_login/views/qa_checklist_report.dart';
 
 showAlertDialog(BuildContext context, String title, String message) {
 
@@ -52,4 +53,33 @@ Future<void> _showMyDialog(BuildContext context) async {
       );
     },
   );
+}
+class ShowDialog extends StatefulWidget {
+  const ShowDialog({super.key, required this.title, required this.message});
+  final String title;
+  final String message;
+  @override
+  State<ShowDialog> createState() => _ShowDialogState();
+}
+
+class _ShowDialogState extends State<ShowDialog> {
+  
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+          title:  Text(widget.title),
+          content:  Text(widget.message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (context) =>const QACheckListReport())),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+  }
 }
