@@ -13,6 +13,8 @@ import 'package:qachecklist_login/utils/dialog_alert.dart';
 import 'package:qachecklist_login/views/login_screen.dart';
 import 'package:qachecklist_login/views/qa_checklist_report.dart';
 import 'package:qachecklist_login/widgets/helpers.dart';
+import 'package:qachecklist_login/widgets/outlet_filter.dart';
+import 'package:qachecklist_login/widgets/outlet_item.dart';
 import 'package:qachecklist_login/widgets/outlet_wg.dart';
 //import 'package:qachecklist_login/widgets/outlet_wg.dart';
 
@@ -27,42 +29,42 @@ class QAOfficerHomeDialog extends ConsumerStatefulWidget {
 class _QAOfficerHomeDialogState extends ConsumerState<QAOfficerHomeDialog> {
   List<OutletModel> outlets = [];
 
-  showMyAlertDialog(
-      BuildContext context,
-      String title,
-      String message,
-      String cancelButtonText,
-      String okButtonText,
-      Function okFunction,
-      Function cancelFunction) {
-    // set up the buttons
-    Widget cancelButton = TextButton(
-      child: Text(cancelButtonText),
-      onPressed: () {},
-    );
-    Widget continueButton = TextButton(
-      child: Text(okButtonText),
-      onPressed: () {},
-    );
+  // showMyAlertDialog(
+  //     BuildContext context,
+  //     String title,
+  //     String message,
+  //     String cancelButtonText,
+  //     String okButtonText,
+  //     Function okFunction,
+  //     Function cancelFunction) {
+  //   // set up the buttons
+  //   Widget cancelButton = TextButton(
+  //     child: Text(cancelButtonText),
+  //     onPressed: () {},
+  //   );
+  //   Widget continueButton = TextButton(
+  //     child: Text(okButtonText),
+  //     onPressed: () {},
+  //   );
 
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(title),
-      content: Text(message),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
+  //   // set up the AlertDialog
+  //   AlertDialog alert = AlertDialog(
+  //     title: Text(title),
+  //     content: Text(message),
+  //     actions: [
+  //       cancelButton,
+  //       continueButton,
+  //     ],
+  //   );
 
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  //   // show the dialog
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return alert;
+  //     },
+  //   );
+  // }
 
   Future<List<OutletModel>> getOutlets() async {
     outlets = ref.watch(outletProvider);
@@ -101,14 +103,14 @@ class _QAOfficerHomeDialogState extends ConsumerState<QAOfficerHomeDialog> {
       Navigator.pop(context, 'Cancel');
     }
 
-    void okFunction() {
-      
+    void qaChecklistReport(OutletModel item) {
       Navigator.of(context).pop();
 
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const QACheckListReport()));
     }
 
+    
     return Scaffold(
         appBar: AppBar(
           title: const Text('QA Officer Workspace'),
@@ -130,51 +132,31 @@ class _QAOfficerHomeDialogState extends ConsumerState<QAOfficerHomeDialog> {
           backgroundColor: Colors.green,
           child: const Icon(Icons.logout_rounded),
         ),
-        body: FutureBuilder(
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return Container(
-                  height: 100,
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  child: ListView.builder(
-                      itemCount: outlets.length,
-                      itemBuilder: (context, index) {
-                        return Row(children: [
-                          Text(outlets[index].name!),
-                          OutlinedButton(
-                              child: Text('+'),
-                              onPressed: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) => AlertDialog(
-                                        title: Text("QA Checking..."),
-                                          content: Text("Checking on restaurant:  "+outlets[index].name!),
-                                          actions: [
-                                            ElevatedButton(
-                                                onPressed: () {
-                                                  Navigator.pop(
-                                                      context, 'Cancel');
-                                                },
-                                                child: Column(children: [
-                                                  Icon(Icons.cancel),
-                                                  Text("Cancel")
-                                                ])),
-                                            ElevatedButton(
-                                                onPressed: okFunction, 
-                                                child: Column(children: [
-                                                  Icon(Icons.approval),
-                                                  Text("OK")
-                                                ]))
-                                          ],
-                                        ));
-                              }),
-                        ]);
-                      }));
-            } else {
-              return const Center(child: Text('No outlet found...'));
-            }
-          },
-          future: getOutlets(),
+        body: Column(
+          children: [
+            OutletFilterForm(),
+            
+            const SizedBox(height: 20,),
+            
+            Expanded(
+              child: FutureBuilder(
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return ListView.builder(
+                        itemCount: outlets.length,
+                        itemBuilder: (context, index) {
+                          return CheckListReportItem(
+                              outletItem: outlets[index],
+                              onCheckOutlet: qaChecklistReport);
+                        });
+                  } else {
+                    return const Center(child: Text('No outlet found...'));
+                  }
+                },
+                future: getOutlets(),
+              ),
+            ),
+          ],
         ));
   }
 }
