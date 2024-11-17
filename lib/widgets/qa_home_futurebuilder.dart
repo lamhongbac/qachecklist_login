@@ -59,7 +59,7 @@ class _QAOfficerHomeFutureBuilderState
   Widget build(BuildContext context) {
     void addCheck()
     {
-      showAlertDialog(context,'Check...','outletName');
+      showSingleAlertDialog(context,'Check...','outletName');
     }
 
     return Scaffold(

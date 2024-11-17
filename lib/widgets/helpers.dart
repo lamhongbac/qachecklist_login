@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
+import 'package:qachecklist_login/widgets/qa_home_dialog.dart';
 //import 'package:qachecklist_login/widgets/qa_home.dart';
 import 'package:qachecklist_login/widgets/qa_home_futurebuilder.dart';
 import 'package:qachecklist_login/widgets/qa_home_provider.dart';
@@ -37,7 +38,7 @@ Widget getHomeScreen() {
 
       if(AuthService.isQaOfficer())
       {
-        activeScreen =  QAOfficerHomeFutureBuilder();
+        activeScreen =  QAOfficerHomeDialog();
       }
       else{
         if(AuthService.isRestaurantManager())

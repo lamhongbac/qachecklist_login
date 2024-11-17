@@ -11,26 +11,26 @@ class QACheckListReport extends StatefulWidget {
 class _QACheckListReportState extends State<QACheckListReport> {
   @override
   Widget build(BuildContext context) {
-    return  Container(
-       child: Column(children: [
-         Text('QA Checklist report',
-          style: Theme.of(context).textTheme.titleLarge),
-        const SizedBox(height: 30,),
-        Expanded(
-            child: SizedBox(
-              height: 100,
-              child: Center(
-                child: Text(
-                  'QA Checklist report',
-                 style: Theme.of(context).textTheme.bodyMedium
+    return  Scaffold(
+      appBar: AppBar(title: const Text('QACheckListReport'),),
+      body: SizedBox(
+        height: double.infinity,
+         child: Column(children: [
+           Text('QA Checklist report',style: Theme.of(context).textTheme.titleLarge),
+          const SizedBox(height: 30,),
+          Expanded(
+              child: SizedBox(
+                height: 100,
+                child: Center(
+                  child: Text('QA Checklist report',style: Theme.of(context).textTheme.bodyMedium),
                 ),
+               
+               
               ),
-             
-             
             ),
-          ),
-
-        ]),
+      
+          ]),
+      ),
     );
   }
 } 

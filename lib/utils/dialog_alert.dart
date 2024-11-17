@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qachecklist_login/views/qa_checklist_report.dart';
 
-showAlertDialog(BuildContext context, String title, String message) {
+showSingleAlertDialog(BuildContext context, String title, String message) {
 
   // set up the button
   Widget okButton = TextButton(
@@ -26,6 +26,7 @@ showAlertDialog(BuildContext context, String title, String message) {
     },
   );
 }
+
 
 Future<void> _showMyDialog(BuildContext context) async {
   return showDialog<void>(
