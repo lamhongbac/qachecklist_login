@@ -47,7 +47,7 @@ final void Function(String text) searchText;
                       searchText(searchContent);
                     }
                   },
-                  child: const Text('Submit'),
+                  child: const Text('Filter'),
                 ),
               ),
             ],
