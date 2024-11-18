@@ -5,11 +5,14 @@ enum userRolesEnum
   qaofficer,
   restautantmanager;
 }
-enum appFunctionsEnum
+enum appFunctions
 {
-  reviewqaactionplan,
-  qachecklistreport,
-  
+  reviewResult,
+  reviewActionPlan,
+  checklistReport,
+  reports,
+  settings,
+  dashboard
 }
 
 enum appUserType

@@ -131,15 +131,11 @@ class _QAOfficerHomeDialogState extends ConsumerState<QAOfficerHomeDialog> {
 
   @override
   Widget build(BuildContext context) {
-    void addCheck() {
-      showSingleAlertDialog(context, 'Check...', 'outletName');
-    }
+    
 
-    void cancelFunction() {
-      Navigator.pop(context, 'Cancel');
-    }
+    
 
-    void qaChecklistReport(OutletModel item) {
+    
     void qaChecklistReport(OutletModel item) {
       Navigator.of(context).pop();
 
@@ -156,7 +152,7 @@ class _QAOfficerHomeDialogState extends ConsumerState<QAOfficerHomeDialog> {
     
     return Scaffold(
         appBar: AppBar(
-          title: const Text('QA Officer Workspace'),
+          title: const Text('QA Checking..'),
           actions: [
             IconButton(
               icon: const Icon(Icons.logout_rounded),
