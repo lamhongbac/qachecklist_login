@@ -109,6 +109,12 @@ class _QAOfficerHomeDialogState extends ConsumerState<QAOfficerHomeDialog> {
       Navigator.push(context,
           MaterialPageRoute(builder: (context) => const QACheckListReport()));
     }
+    /// su dung provider de filter lai
+    void filterOutlet(String text)
+    {
+
+
+    }
 
     
     return Scaffold(
@@ -125,16 +131,18 @@ class _QAOfficerHomeDialogState extends ConsumerState<QAOfficerHomeDialog> {
             )
           ],
         ),
+        floatingActionButtonLocation:FloatingActionButtonLocation.centerTop,
         floatingActionButton: FloatingActionButton(
+          
           onPressed: () {
             getOutlets();
           },
           backgroundColor: Colors.green,
-          child: const Icon(Icons.logout_rounded),
+          child: const Icon(Icons.store),
         ),
         body: Column(
           children: [
-            OutletFilterForm(),
+            OutletFilterForm(searchText: filterOutlet  ),
             
             const SizedBox(height: 20,),
             
