@@ -15,6 +15,8 @@ import 'package:qachecklist_login/views/qa_checklist_report.dart';
 import 'package:qachecklist_login/widgets/helpers.dart';
 import 'package:qachecklist_login/widgets/outlet_filter.dart';
 import 'package:qachecklist_login/widgets/outlet_item.dart';
+import 'package:qachecklist_login/widgets/outlet_filter.dart';
+import 'package:qachecklist_login/widgets/outlet_item.dart';
 import 'package:qachecklist_login/widgets/outlet_wg.dart';
 //import 'package:qachecklist_login/widgets/outlet_wg.dart';
 
@@ -46,6 +48,23 @@ class _QAOfficerHomeDialogState extends ConsumerState<QAOfficerHomeDialog> {
   //     child: Text(okButtonText),
   //     onPressed: () {},
   //   );
+  // showMyAlertDialog(
+  //     BuildContext context,
+  //     String title,
+  //     String message,
+  //     String cancelButtonText,
+  //     String okButtonText,
+  //     Function okFunction,
+  //     Function cancelFunction) {
+  //   // set up the buttons
+  //   Widget cancelButton = TextButton(
+  //     child: Text(cancelButtonText),
+  //     onPressed: () {},
+  //   );
+  //   Widget continueButton = TextButton(
+  //     child: Text(okButtonText),
+  //     onPressed: () {},
+  //   );
 
   //   // set up the AlertDialog
   //   AlertDialog alert = AlertDialog(
@@ -56,7 +75,24 @@ class _QAOfficerHomeDialogState extends ConsumerState<QAOfficerHomeDialog> {
   //       continueButton,
   //     ],
   //   );
+  //   // set up the AlertDialog
+  //   AlertDialog alert = AlertDialog(
+  //     title: Text(title),
+  //     content: Text(message),
+  //     actions: [
+  //       cancelButton,
+  //       continueButton,
+  //     ],
+  //   );
 
+  //   // show the dialog
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return alert;
+  //     },
+  //   );
+  // }
   //   // show the dialog
   //   showDialog(
   //     context: context,
@@ -103,6 +139,7 @@ class _QAOfficerHomeDialogState extends ConsumerState<QAOfficerHomeDialog> {
       Navigator.pop(context, 'Cancel');
     }
 
+    void qaChecklistReport(OutletModel item) {
     void qaChecklistReport(OutletModel item) {
       Navigator.of(context).pop();
 
