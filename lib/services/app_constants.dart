@@ -7,16 +7,16 @@ class ApiConstants {
   static const companyID = 3;
   static const companyCode = "INDINING";
   static const isLogin = "isLogin";
-
+  //http://115.165.166.2:8003/api/Outlet/GetOutletsByPage
   static const String loginRequestUrl =
-      'http://203.113.174.190:8004/api/Account/Login';
+      'http://115.165.166.2:8003/api/Account/Login';
   static const String getOutletRequestUrl =
-      "http://203.113.174.190:8004/api/Outlet/GetOutletsByPage";
+      "http://115.165.166.2:8003/api/Outlet/GetOutletsByPage";
 
   static const String mobLoginRequestUrl =
-      'http://203.113.174.190:8004/api/app/MobileAccount/MobLogin';
+      'http://115.165.166.2:8003/api/app/MobileAccount/MobLogin';
   static const String getOutletPendingRequestUrl =
-      'http://203.113.174.190:8004/api/app/Outlet/GetOutletWithPending';
+      'http://115.165.166.2:8003/api/app/Outlet/GetOutletWithPending';
 
 }
 

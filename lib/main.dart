@@ -27,14 +27,7 @@ void main() async {
   }
   registerErrorHandlers();
 
-  // SystemChrome.setPreferredOrientations([
-  //   DeviceOrientation.portraitUp,
-  //   DeviceOrientation.portraitDown,
-  // ]).then((fn) {
-  //   const ProviderScope(
-  //    child: MyApp());
-  // });
-  //runApp(const MyApp());
+  
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((fn) {
     runApp(const ProviderScope(child: MyApp()));
