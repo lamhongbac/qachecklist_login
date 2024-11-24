@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:qachecklist_login/api/models/question_model.dart';
+import 'package:qachecklist_login/models/question_model.dart';
 
 ///
 /// doi tuong state dai dien cho danh sach hien tai

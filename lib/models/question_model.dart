@@ -3,7 +3,6 @@
 // ex: ta co cau hoi Q="khu vuc khach hang co sach se?"
 // cau hoi do se dan den 1 data CL, co cac thanh phan Question, Ketqua, Hinh anh, notes,..vv
 
-import 'package:flutter_easy/flutter_easy.dart';
 
 class CLQuestionItem {
   CLQuestionItem({required this.id, required this.itemText, required this.points});

@@ -1,11 +1,11 @@
 import 'package:http/http.dart' as http;
-import 'package:qachecklist_login/api/models/outlet_models.dart';
+import 'package:qachecklist_login/models/outlet_models.dart';
 
 import 'dart:convert';
 
 import 'package:qachecklist_login/services/app_constants.dart';
-import 'package:qachecklist_login/api/models/account_models.dart';
-import 'package:qachecklist_login/api/models/general_models.dart';
+import 'package:qachecklist_login/models/account_models.dart';
+import 'package:qachecklist_login/models/general_models.dart';
 
 ///
 /// response: la response  tu api request

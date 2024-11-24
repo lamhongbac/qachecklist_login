@@ -3,49 +3,29 @@
 //import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:qachecklist_login/api/models/general_models.dart';
-import 'package:qachecklist_login/models/outlets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+import 'package:qachecklist_login/datas/master_datas.dart';
+
 import 'package:qachecklist_login/services/auth_services.dart';
-import 'package:qachecklist_login/services/outlet_services.dart';
+
 import 'package:qachecklist_login/views/login_screen.dart';
-import 'package:qachecklist_login/widgets/helpers.dart';
+
 //import 'package:qachecklist_login/widgets/outlet_wg.dart';
 
-class QAOfficerHome_copy extends StatefulWidget {
-  QAOfficerHome_copy({super.key});
+class QAOfficerHomeProvider extends ConsumerStatefulWidget  {
+  const QAOfficerHomeProvider({super.key});
 
   @override
-  State<QAOfficerHome_copy> createState() => _QAOfficerHome_copyState();
+  ConsumerState<QAOfficerHomeProvider> createState() => _QAOfficerHomeProviderState();
   
 }
 
-class _QAOfficerHome_copyState extends State<QAOfficerHome_copy> {
+class _QAOfficerHomeProviderState extends ConsumerState<QAOfficerHomeProvider> {
+  
+  
 
-  List<OutletModel> outlets = [];
-
-  getOutlets() async {
-    OutletServices outletServices = OutletServices();
-    if (AuthService.userInfo != null) {
-      String userID = AuthService.userInfo!.userName;
-      ApiRequestResult apiRequestResult =await outletServices.getOutlets(userID);
-
-      if (apiRequestResult.ok) {
-        setState(() {
-          List<dynamic> lists=apiRequestResult.content;
-          lists.forEach((e) => outlets.add(OutletModel.fromJson((e))));
-
-          //print(outlets.length);
-
-        });
-      } else {
-        //info
-        
-         showInfoMessage('no outlet find',context);
-
-      }
-      return null;
-    }
-  }
+  
 
   signOut(BuildContext context) async {
     AuthService authService = AuthService();
@@ -61,7 +41,8 @@ class _QAOfficerHome_copyState extends State<QAOfficerHome_copy> {
   }
   @override
   Widget build(BuildContext context) {
-   
+   final outlets=ref.watch(outletProvider);
+
     Widget? activeWg;
     if (outlets.length==0)
     {
@@ -81,7 +62,7 @@ class _QAOfficerHome_copyState extends State<QAOfficerHome_copy> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('QA Officer Home Screen'),
+        title: const Text('QA Officer Home Screen  apply Data provider'),
         actions: [
           IconButton(
             icon: const Icon(Icons.logout_rounded),
@@ -95,7 +76,7 @@ class _QAOfficerHome_copyState extends State<QAOfficerHome_copy> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          getOutlets();
+          //getOutlets();
         },
         backgroundColor: Colors.green,
         child: const Icon(Icons.logout_rounded),

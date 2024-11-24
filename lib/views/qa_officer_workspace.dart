@@ -5,7 +5,7 @@ import 'package:qachecklist_login/views/qa_checklist_report.dart';
 import 'package:qachecklist_login/views/qa_review.dart';
 import 'package:qachecklist_login/views/settings.dart';
 import 'package:qachecklist_login/widgets/app_drawer.dart';
-import 'package:qachecklist_login/widgets/qa_home_dialog.dart';
+import 'package:qachecklist_login/views/qa_home_dialog.dart';
 
 class QAOfficerWorkspace extends StatefulWidget {
   const QAOfficerWorkspace({super.key});
@@ -22,7 +22,7 @@ class _QAOfficerWorkspaceState extends State<QAOfficerWorkspace> {
   @override
   Widget build(BuildContext context) {
     if (_selectPageIndex == 0) {
-      activePage = const QaCheck();
+      activePage = const QAOfficerHomeDialog();
       _title = "QA Checklist report";
     }
     if (_selectPageIndex == 1) {

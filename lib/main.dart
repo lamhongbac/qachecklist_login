@@ -6,13 +6,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qachecklist_login/datas/master_datas.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/services/app_constants.dart';
+import 'package:qachecklist_login/theme/theme_constants.dart';
+import 'package:qachecklist_login/theme/theme_manager.dart';
 //import 'package:qachecklist_login/services/outlet_services.dart';
 //import 'package:qachecklist_login/api/models/account_models.dart';
-import 'package:qachecklist_login/views/auth_check.dart';
+import 'package:qachecklist_login/views/appInit.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
 import 'package:qachecklist_login/views/login_screen.dart';
-import 'package:qachecklist_login/widgets/qa_home.dart';
-import 'package:qachecklist_login/widgets/rest_home.dart';
+import 'package:qachecklist_login/views/qa_home.dart';
+import 'package:qachecklist_login/views/rest_home.dart';
 
 bool masterDataReady=false;
 
@@ -26,27 +28,54 @@ void main() async {
     masterDataReady = await masterDataService.getMasterData(userID);
   }
   registerErrorHandlers();
-
-  
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((fn) {
     runApp(const ProviderScope(child: MyApp()));
   });
 }
 
-class MyApp extends StatelessWidget {
+ThemeManager _themeManager=ThemeManager();
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+ 
+  // day la cai cach lang nghe su thay doi trong ThemeManager.
+
+  @override
+  void dispose() {
+    _themeManager.removeListener(themeListener);
+    super.dispose();
+  }
+
+  @override
+  void initState() {
+    _themeManager.addListener(themeListener);
+    super.initState();
+  }
+  
+  //===>
+  // day la cach phan ung lai su thay doi cua ThemeManager
+  // thuc hien lai haàm build moi khi co thay doi
+  //<===
+  themeListener() {
+    if (mounted) {
+      setState(() {});
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: AppConstants.appTitle,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const AuthCheck(),
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      themeMode: _themeManager.themeMode ,
+      
+      home: const AppInit(),
       routes: {
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),

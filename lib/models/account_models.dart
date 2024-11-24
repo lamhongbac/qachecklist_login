@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:qachecklist_login/api/models/general_models.dart';
+import 'package:qachecklist_login/models/general_models.dart';
 import 'package:qachecklist_login/models/userinfo.dart';
 
 ///

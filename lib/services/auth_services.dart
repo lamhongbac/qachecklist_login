@@ -1,8 +1,8 @@
 //import 'dart:convert';
 
 import 'package:qachecklist_login/api/api_services.dart';
-import 'package:qachecklist_login/api/models/account_models.dart';
-import 'package:qachecklist_login/api/models/general_models.dart';
+import 'package:qachecklist_login/models/account_models.dart';
+import 'package:qachecklist_login/models/general_models.dart';
 import 'package:qachecklist_login/services/app_constants.dart';
 import 'package:qachecklist_login/services/user_data_types.dart';
 //import 'package:qachecklist_login/models/userinfo.dart';

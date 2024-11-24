@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:qachecklist_login/services/auth_services.dart';
 import 'package:qachecklist_login/views/home_screen.dart';
 import 'package:qachecklist_login/views/qa_officer_workspace.dart';
-import 'package:qachecklist_login/widgets/qa_home_dialog.dart';
+import 'package:qachecklist_login/views/qa_home_dialog.dart';
 //import 'package:qachecklist_login/widgets/qa_home.dart';
-import 'package:qachecklist_login/widgets/qa_home_futurebuilder.dart';
-import 'package:qachecklist_login/widgets/qa_home_provider.dart';
-import 'package:qachecklist_login/widgets/rest_home.dart';
+import 'package:qachecklist_login/views/qa_home_futurebuilder.dart';
+import 'package:qachecklist_login/views/qa_home_provider.dart';
+import 'package:qachecklist_login/views/rest_home.dart';
 
 Widget addVerticalSpace(double height) {
   return SizedBox(

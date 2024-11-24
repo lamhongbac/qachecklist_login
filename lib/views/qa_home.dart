@@ -3,7 +3,7 @@
 //import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:qachecklist_login/api/models/general_models.dart';
+import 'package:qachecklist_login/models/general_models.dart';
 import 'package:qachecklist_login/models/outlets.dart';
 
 import 'package:qachecklist_login/services/auth_services.dart';
